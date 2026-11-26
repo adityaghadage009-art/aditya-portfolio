@@ -715,12 +715,15 @@ body.lblock{overflow:hidden}
 @media (min-width:901px){.words{height:calc(720*var(--u))}.wrow{height:calc(390*var(--u))}.wnote{height:calc(370*var(--u))}}
 
 /* ===== Recent projects board v5: the real frame, pinboard recoloured to the site palette ===== */
-.board{height:calc(968*var(--u));top:calc(222*var(--u));border-radius:0;padding:0;box-shadow:none!important;background:url(assets/board2.webp) center/100% 100% no-repeat!important}
+.board{height:calc(968*var(--u));top:calc(222*var(--u));border-radius:0;padding:0;box-shadow:none!important;background:url(assets/board3.webp) center/100% 100% no-repeat!important}
 .board::before,.board::after{content:none!important}
 @media (max-width:900px){
   #cards{background:none!important;box-shadow:none!important;border-radius:0!important;margin:0 6px;
-    border:solid transparent;border-width:30px 34px 52px 30px;border-image:url(assets/board2.webp) 42 66 87 61 fill / 30px 34px 52px 30px stretch;padding:34px 8px 20px!important}
+    border:solid transparent;border-width:30px 34px 52px 30px;border-image:url(assets/board3.webp) 42 66 87 61 fill / 30px 34px 52px 30px stretch;padding:34px 8px 20px!important}
 }
+
+.pcard .paper{box-shadow:0 1px 1px rgba(40,30,20,.08),0 calc(10*var(--u)) calc(18*var(--u)) calc(-12*var(--u)) rgba(50,30,10,.28)}
+.pin{filter:drop-shadow(0 calc(2*var(--u)) calc(2*var(--u)) rgba(0,0,0,.2))}
 </style>
 </head>
 <body>
