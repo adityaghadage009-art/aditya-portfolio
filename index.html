@@ -730,6 +730,30 @@ body.lblock{overflow:hidden}
   background:url(assets/board4.webp) center/100% 100% no-repeat!important;border-radius:calc(4*var(--u))!important;
   box-shadow:0 calc(2*var(--u)) calc(3*var(--u)) rgba(60,40,20,.08),0 calc(26*var(--u)) calc(44*var(--u)) calc(-26*var(--u)) rgba(60,40,20,.22)!important}
 @media (max-width:900px){#cards{border-image:url(assets/board4.webp) 44 fill / 16px stretch!important;border-width:16px!important;box-shadow:0 18px 30px -20px rgba(60,40,20,.25)!important;padding:46px 14px 26px!important}}
+
+/* ===== Testimonials v3: kraft-backed paper notes, taped up, gently tilted, single row ===== */
+.wrow .tr{gap:calc(34*var(--u));padding-top:calc(16*var(--u))}
+.wnote{border-radius:calc(10*var(--u))!important;overflow:visible!important;background:#c2a382 url(assets/paper.jpg) center/cover!important;background-blend-mode:multiply!important;
+  box-shadow:inset 0 0 0 1px rgba(60,40,20,.12)!important;rotate:var(--tilt,0deg);transition:rotate .7s var(--spring),translate .7s var(--spring)!important;transform:none!important}
+.wnote:nth-child(4n+1){--tilt:-1.2deg}.wnote:nth-child(4n+2){--tilt:.9deg}.wnote:nth-child(4n+3){--tilt:-.6deg}.wnote:nth-child(4n){--tilt:1.3deg}
+.wnote:hover,.wnote:focus-visible{rotate:0deg;translate:0 calc(-8*var(--u))}
+.wnote::after{content:"";position:absolute;left:50%;top:calc(-14*var(--u));width:calc(96*var(--u));height:calc(28*var(--u));margin-left:calc(-48*var(--u));z-index:3;
+  background:rgba(227,162,26,.55);rotate:-3deg;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+  -webkit-mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px));mask:linear-gradient(90deg,transparent 0 3px,#000 3px calc(100% - 3px),transparent calc(100% - 3px))}
+.wnote:nth-child(2n)::after{background:rgba(111,107,52,.45);rotate:2deg}
+.wnote .hd{padding:calc(24*var(--u)) calc(24*var(--u)) calc(30*var(--u))!important}
+.wnote .hd img{box-shadow:0 0 0 2px rgba(255,255,255,.75)!important}
+.wnote .bd{left:calc(10*var(--u))!important;right:calc(10*var(--u))!important;bottom:calc(10*var(--u))!important;top:calc(108*var(--u))!important;border-radius:calc(6*var(--u))!important;background:#fffdf8!important;padding:calc(46*var(--u)) calc(24*var(--u)) calc(24*var(--u))!important}
+.wnote .bd::before{content:"“";position:absolute;left:calc(20*var(--u));top:calc(4*var(--u));font:400 calc(64*var(--u))/1 var(--serif);color:var(--mustard)}
+.wnote .bd p{font-size:calc(17*var(--u))!important;line-height:calc(28*var(--u))!important;-webkit-line-clamp:6!important}
+.wnote .more{left:calc(24*var(--u))!important;bottom:calc(20*var(--u))!important}
+.wfull{border-radius:12px!important}
+.wfull .bd{border-radius:8px!important;margin:0 12px 12px!important;background:#fffdf8!important}
+@media (max-width:900px){
+  .wnote .bd{top:92px!important;left:8px!important;right:8px!important;bottom:8px!important;padding:40px 18px 18px!important}
+  .wnote .bd::before{font-size:52px;left:16px}.wnote .bd p{font-size:15.5px!important;line-height:25px!important}
+  .wnote::after{top:-11px;width:76px;height:22px;margin-left:-38px}.wnote .more{left:18px!important;bottom:16px!important}
+}
 </style>
 </head>
 <body>
