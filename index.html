@@ -713,6 +713,14 @@ body.lblock{overflow:hidden}
 @media (max-width:900px){.projects,.studio,.nine,.think,.words,.life{margin-top:56px}}
 
 @media (min-width:901px){.words{height:calc(720*var(--u))}.wrow{height:calc(390*var(--u))}.wnote{height:calc(370*var(--u))}}
+
+/* ===== Recent projects board v5: the real frame, pinboard recoloured to the site palette ===== */
+.board{height:calc(968*var(--u));top:calc(222*var(--u));border-radius:0;padding:0;box-shadow:none!important;background:url(assets/board2.webp) center/100% 100% no-repeat!important}
+.board::before,.board::after{content:none!important}
+@media (max-width:900px){
+  #cards{background:none!important;box-shadow:none!important;border-radius:0!important;margin:0 6px;
+    border:solid transparent;border-width:30px 34px 52px 30px;border-image:url(assets/board2.webp) 42 66 87 61 fill / 30px 34px 52px 30px stretch;padding:34px 8px 20px!important}
+}
 </style>
 </head>
 <body>
