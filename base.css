@@ -229,3 +229,12 @@ img{display:block}
 .sh .foot-note{text-align:center;font:400 12.5px/1.4 var(--sans);color:var(--mute);margin-top:14px}
 .sh button:focus-visible,.sh a:focus-visible{outline:2px solid var(--mustard);outline-offset:2px}
 body.shlock{overflow:hidden}
+
+/* ---------- docked nav: once you leave the top, only the pill stays, smaller and lifted, so nothing floats over content ---------- */
+.nav .meta,.nav .links{transition:opacity .45s var(--ease),transform .6s var(--ease)}
+.nav .pill{transition:transform .7s var(--spring),box-shadow .5s var(--ease)}
+.nav.docked .meta,.nav.docked .links{opacity:0;transform:translateY(-10px);pointer-events:none}
+.nav.docked .pill{transform:translateY(calc(-34*var(--u))) scale(.86);box-shadow:0 14px 34px -14px rgba(30,20,10,.38),0 0 0 1px rgba(30,20,10,.05)}
+.nav.docked.peek .meta,.nav.docked.peek .links{opacity:1;transform:none;pointer-events:auto}
+@media (max-width:900px){.nav.docked .pill{transform:translateY(-4px) scale(.92)}}
+@media (prefers-reduced-motion:reduce){.nav .pill,.nav .meta,.nav .links{transition:none}}

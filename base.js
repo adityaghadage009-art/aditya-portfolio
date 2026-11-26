@@ -116,7 +116,9 @@ pill && $$('.tab', pill).forEach(t => {
 });
 /* hide nav on scroll down, show on scroll up */
 let ly = scrollY; const nav = $('.nav');
-addEventListener('scroll', () => { const y = scrollY; nav && nav.classList.toggle('away', y > ly && y > 240); ly = y; }, { passive: true });
+addEventListener('scroll', () => { const y = scrollY; if (nav) { nav.classList.toggle('away', y > ly && y > 240); nav.classList.toggle('docked', y > 120); } ly = y; }, { passive: true });
+/* on desktop, bringing the pointer to the top edge brings the full header back */
+if (nav && matchMedia('(hover:hover)').matches) addEventListener('mousemove', e => nav.classList.toggle('peek', e.clientY < 110 && nav.classList.contains('docked')), { passive: true });
 
 /* ---------- magnetic ---------- */
 window.magnet = (sel, k = .3) => $$(sel).forEach(el => {
