@@ -754,6 +754,45 @@ body.lblock{overflow:hidden}
   .wnote .bd::before{font-size:52px;left:16px}.wnote .bd p{font-size:15.5px!important;line-height:25px!important}
   .wnote::after{top:-11px;width:76px;height:22px;margin-left:-38px}.wnote .more{left:18px!important;bottom:16px!important}
 }
+
+/* ===== Testimonials v4: straight, quiet, in the hero's language (cream card, serif voice, black + mustard) ===== */
+.wrow .tr{padding-top:0;gap:calc(28*var(--u))}
+.wnote{rotate:0deg!important;translate:none;background:#fffdf8!important;background-image:none!important;border-radius:calc(14*var(--u))!important;overflow:hidden!important;
+  box-shadow:inset 0 0 0 1px rgba(31,26,22,.10)!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+  padding:calc(34*var(--u)) calc(32*var(--u)) calc(26*var(--u))!important;transition:box-shadow .45s var(--ease),translate .6s var(--ease),background-color .45s!important}
+.wnote::after{content:none!important}
+.wnote:hover,.wnote:focus-visible{translate:0 calc(-6*var(--u));box-shadow:inset 0 0 0 1.5px rgba(31,26,22,.85)!important}
+.wnote .bd{position:relative!important;inset:auto!important;order:1;background:none!important;padding:0!important;border-radius:0!important;flex:1}
+.wnote .bd::before{content:"“";position:static;display:block;height:calc(34*var(--u));font:400 calc(72*var(--u))/1 var(--serif);color:var(--mustard)}
+.wnote .bd p{font:400 calc(21*var(--u))/1.45 var(--serif)!important;color:#1f1a16!important;letter-spacing:-.005em;-webkit-line-clamp:5!important;margin-top:calc(10*var(--u))!important}
+.wnote .more{display:none!important}
+.wnote .hd{order:2;position:relative;padding:calc(20*var(--u)) calc(54*var(--u)) 0 0!important;margin-top:calc(18*var(--u));border-top:1px dashed rgba(31,26,22,.2);gap:calc(14*var(--u))!important}
+.wnote .hd img{width:calc(48*var(--u))!important;height:calc(48*var(--u))!important;box-shadow:none!important;filter:grayscale(.15)}
+.wnote .nm{color:#1f1a16!important;font:600 calc(17*var(--u))/1.2 var(--sans)!important}
+.wnote .rl{color:#8b8177!important;font:500 calc(13.5*var(--u))/1.3 var(--sans)!important;margin-top:calc(3*var(--u))!important}
+.wnote .hd::after{content:"";position:absolute;right:0;top:calc(20*var(--u) + 2*var(--u));width:calc(44*var(--u));height:calc(44*var(--u));border-radius:50%;
+  background:#efe9df url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f1a16' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M9 7h8v8'/%3E%3C/svg%3E") center/42% no-repeat;
+  transition:background-color .4s var(--ease),transform .5s var(--spring)}
+.wnote:hover .hd::after,.wnote:focus-visible .hd::after{background-color:var(--mustard);transform:rotate(45deg)}
+/* open state */
+.wfull{background:#fffdf8!important;background-image:none!important;border-radius:16px!important;box-shadow:inset 0 0 0 1px rgba(31,26,22,.1),0 40px 80px -40px rgba(0,0,0,.45)!important;display:flex;flex-direction:column}
+.wfull .bd{order:1;background:none!important;margin:0!important;padding:44px 44px 8px!important;border-radius:0!important}
+.wfull .bd::before{content:"“";display:block;height:40px;font:400 84px/1 var(--serif);color:var(--mustard)}
+.wfull .bd p{font:400 clamp(20px,1.7vw,26px)/1.5 var(--serif)!important;color:#1f1a16!important;margin-top:12px}
+.wfull .hd{order:2;margin:20px 44px 0;padding:20px 0 34px!important;border-top:1px dashed rgba(31,26,22,.2)}
+.wfull .hd img{width:56px!important;height:56px!important;box-shadow:none!important}
+.wfull .nm{color:#1f1a16!important;font-size:19px!important}.wfull .rl{color:#8b8177!important}
+.wfull .wx{background:#efe9df!important;color:#1f1a16!important}.wfull .wx:hover{background:var(--mustard)!important}
+@media (max-width:900px){
+  .wnote{padding:24px 22px 20px!important;border-radius:12px!important}
+  .wnote .bd::before{font-size:56px;height:26px}.wnote .bd p{font-size:18px!important;-webkit-line-clamp:6!important}
+  .wnote .hd{padding:16px 48px 0 0!important;margin-top:14px}.wnote .hd img{width:42px!important;height:42px!important}
+  .wnote .nm{font-size:15.5px!important}.wnote .rl{font-size:12.5px!important}
+  .wnote .hd::after{width:38px;height:38px;top:18px}
+  .wfull .bd{padding:30px 24px 6px!important}.wfull .hd{margin:16px 24px 0;padding:16px 0 24px!important}
+}
+
+@media (max-width:900px){.words{height:auto!important;padding-bottom:20px}.wrows{position:relative!important;top:auto!important;margin-top:34px;opacity:1}.wrow{height:330px!important}.wnote{width:290px!important;height:310px!important}}
 </style>
 </head>
 <body>
