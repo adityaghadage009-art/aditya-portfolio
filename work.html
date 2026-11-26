@@ -60,7 +60,7 @@ main.page{background:transparent!important}
 .ovl{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;gap:calc(14*var(--u));padding:calc(26*var(--u));
   background:linear-gradient(to top,rgba(24,19,15,.78) 0%,rgba(24,19,15,.35) 45%,rgba(24,19,15,0) 70%);opacity:0;transition:opacity .55s var(--ease)}
 .ovl .tags{margin:0;gap:calc(8*var(--u))}
-.ovl .tags span{color:#fff;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+.card .ovl .tags span,.card:hover .ovl .tags span{color:#fff!important;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   font-size:max(12px,calc(14*var(--u)));line-height:max(26px,calc(30*var(--u)));opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
 .ovl .go{align-self:flex-start;font:600 max(12px,calc(13*var(--u)))/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mustard);opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease) .2s,transform .6s var(--ease) .2s}
 .ovl .go i{font-style:normal;display:inline-block;margin-left:.4em}
@@ -94,6 +94,19 @@ main.page{background:transparent!important}
 @keyframes dogB{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg) translateY(-3px)}}
 @media (max-width:900px){.soon{margin-top:80px;padding-bottom:70px}.soon-in{grid-template-columns:1fr;gap:40px}.soon h2{font-size:36px}.soon p{font-size:16px;line-height:26px;max-width:none}.soon-art{height:300px}.soon-art .dog{width:130px}.s-c span{font-size:44px}}
 @media (prefers-reduced-motion:reduce){.sheet,.soon-art .dog,.soon-ey i{animation:none}}
+
+.soon{text-align:center;display:flex;flex-direction:column;align-items:center;margin:calc(170*var(--u)) 0 0;padding:0 0 calc(170*var(--u))}
+.soon h2{margin-top:calc(26*var(--u));font-size:calc(84*var(--u));line-height:1.05}
+.soon p{max-width:calc(560*var(--u));margin-top:calc(26*var(--u));font-size:calc(20*var(--u));line-height:calc(32*var(--u))}
+.soon-go{margin-top:calc(60*var(--u))}
+.dogbtn{position:relative;overflow:visible!important;height:max(54px,calc(64*var(--u)));padding:0 max(26px,calc(34*var(--u)));font-size:max(15px,calc(18*var(--u)))}
+.dogbtn .pup{position:absolute;left:calc(14*var(--u));bottom:calc(100% - 14*var(--u));width:max(54px,calc(70*var(--u)));height:auto;pointer-events:none;transform-origin:50% 100%;
+  transform:translateY(40%) rotate(-6deg);clip-path:inset(0 0 40% 0);transition:transform .6s var(--spring),clip-path .6s var(--spring);filter:drop-shadow(0 4px 4px rgba(40,30,20,.18))}
+.dogbtn:hover .pup,.dogbtn:focus-visible .pup{transform:translateY(0) rotate(4deg);clip-path:inset(0 0 0 0)}
+.soon.in .dogbtn .pup{animation:pupPeek 4.5s ease-in-out 1.2s infinite}
+.dogbtn:hover .pup{animation:none}
+@keyframes pupPeek{0%,70%,100%{transform:translateY(40%) rotate(-6deg)}78%,90%{transform:translateY(8%) rotate(3deg)}}
+@media (max-width:900px){.soon{margin-top:90px;padding-bottom:90px}.soon h2{font-size:40px}.soon p{font-size:16px;line-height:26px;padding:0 10px}.soon-go{margin-top:56px}}
 </style>
 </head>
 <body>
@@ -132,20 +145,10 @@ main.page{background:transparent!important}
   </section>
   <section class="grid" id="grid"></section>
   <section class="soon rv" aria-label="New projects coming soon">
-    <div class="soon-in">
-      <div class="soon-txt">
-        <span class="soon-ey"><i></i>On the canvas right now</span>
-        <h2>New projects are <span class="mark">brewing<i class="hlr"></i></span>.</h2>
-        <p>Sketches, second thoughts and a lot of coffee. The pup is guarding the files until they’re ready.</p>
-        <div class="soon-go"><a class="btn btn-primary" href="mailto:adityaghadage009@gmail.com" data-hi>Say hi in the meantime <span class="ic">👋</span></a></div>
-      </div>
-      <div class="soon-art" aria-hidden="true">
-        <div class="sheet s-a"><b></b><b></b><b></b></div>
-        <div class="sheet s-b"><b></b><b></b></div>
-        <div class="sheet s-c"><span>WIP</span></div>
-        <img class="dog" src="assets/dog.svg" alt="">
-      </div>
-    </div>
+    <span class="soon-ey"><i></i>On the canvas right now</span>
+    <h2>New projects are <span class="mark">brewing<i class="hlr"></i></span>.</h2>
+    <p>Sketches, second thoughts and a lot of coffee. Want a peek before they’re out?</p>
+    <div class="soon-go"><a class="btn btn-primary dogbtn" href="mailto:adityaghadage009@gmail.com" data-hi><img class="pup" src="assets/dog.svg" alt="" aria-hidden="true">Ask me what I’m working on <span class="ic">→</span></a></div>
   </section>
 </main>
 <footer class="page">

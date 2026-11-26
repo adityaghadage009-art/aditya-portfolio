@@ -350,7 +350,8 @@ body.wlock{overflow:hidden}
 /* ---------- floating 3D strips ---------- */
 .ftick{perspective:1600px;touch-action:pan-y;user-select:none}
 .ftick .track{display:flex;gap:calc(28*var(--u));height:100%;width:max-content;will-change:transform;transform-style:preserve-3d}
-.ftick .fc{position:relative;flex:none;height:100%;padding:calc(8*var(--u));border-radius:calc(14*var(--u));background:#fffdf9;cursor:pointer;
+.ftick .track{pointer-events:none}
+.ftick .fc{pointer-events:auto;position:relative;flex:none;height:100%;padding:calc(8*var(--u));border-radius:calc(14*var(--u));background:#fffdf9;cursor:pointer;
   box-shadow:0 1px 1px rgba(40,30,20,.06),0 calc(24*var(--u)) calc(40*var(--u)) calc(-22*var(--u)) rgba(40,30,20,.45);will-change:transform;transform-style:preserve-3d}
 .ftick .fc img{display:block;height:100%;width:auto;border-radius:calc(8*var(--u));pointer-events:none;transition:filter .5s var(--ease)}
 .ftick .fc::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,0) 35%,rgba(255,255,255,.35) 50%,rgba(255,255,255,0) 65%) -120% 0/250% 100% no-repeat;transition:background-position 1s var(--ease)}
@@ -530,6 +531,141 @@ body.lblock{overflow:hidden}
 @media (max-width:900px){.think .rail{left:auto!important;top:auto!important;height:auto!important;column-gap:0!important;transform:none!important}
   .think .panel{width:auto!important;opacity:1!important}.think .tprog{display:none}
   .tcard .art{max-width:520px;margin:0 auto;width:100%}}
+
+/* ===== Recent projects board: the cork board redrawn in the hero's illustration style ===== */
+.board{border-radius:calc(30*var(--u));padding:calc(24*var(--u));background:#efe3cf;
+  box-shadow:0 0 0 3px #1f1a16,inset 0 calc(3*var(--u)) 0 rgba(255,255,255,.75),inset 0 calc(-4*var(--u)) 0 rgba(120,90,55,.18),
+   0 calc(14*var(--u)) 0 -2px #1f1a16,0 calc(50*var(--u)) calc(70*var(--u)) calc(-30*var(--u)) rgba(40,30,20,.35)}
+.board::before{content:"";position:absolute;inset:calc(24*var(--u));border:0;border-radius:calc(14*var(--u));
+  background:linear-gradient(rgba(255,240,215,.08),rgba(90,55,25,.08)),url(assets/cork.webp) center/cover;
+  box-shadow:0 0 0 2.5px #1f1a16,inset 0 calc(10*var(--u)) calc(22*var(--u)) rgba(60,35,15,.28),inset 0 0 calc(60*var(--u)) rgba(60,35,15,.16)}
+.board::after{content:"";position:absolute;inset:calc(9*var(--u));pointer-events:none;
+  background:radial-gradient(circle,#1f1a16 0 calc(4.5*var(--u)),var(--mustard) calc(4.5*var(--u)) calc(6.5*var(--u)),transparent calc(7*var(--u))) left top/calc(14*var(--u)) calc(14*var(--u)) no-repeat,
+   radial-gradient(circle,#1f1a16 0 calc(4.5*var(--u)),var(--mustard) calc(4.5*var(--u)) calc(6.5*var(--u)),transparent calc(7*var(--u))) right top/calc(14*var(--u)) calc(14*var(--u)) no-repeat,
+   radial-gradient(circle,#1f1a16 0 calc(4.5*var(--u)),var(--mustard) calc(4.5*var(--u)) calc(6.5*var(--u)),transparent calc(7*var(--u))) left bottom/calc(14*var(--u)) calc(14*var(--u)) no-repeat,
+   radial-gradient(circle,#1f1a16 0 calc(4.5*var(--u)),var(--mustard) calc(4.5*var(--u)) calc(6.5*var(--u)),transparent calc(7*var(--u))) right bottom/calc(14*var(--u)) calc(14*var(--u)) no-repeat}
+.pcard .paper{box-shadow:0 0 0 2px #1f1a16,0 calc(14*var(--u)) calc(24*var(--u)) calc(-12*var(--u)) rgba(40,25,10,.5)}
+@media (max-width:900px){
+  #cards{background:linear-gradient(rgba(255,240,215,.08),rgba(90,55,25,.08)),url(assets/cork.webp) center/cover!important;border-radius:18px!important;
+    box-shadow:0 0 0 2.5px #1f1a16,0 0 0 14px #efe3cf,0 0 0 17px #1f1a16,0 22px 30px -14px rgba(40,30,20,.4),inset 0 8px 18px rgba(60,35,15,.28)!important;margin:0 17px}
+}
+
+.board::before{background:linear-gradient(rgba(214,150,80,.16),rgba(150,90,40,.14)),url(assets/cork.webp) center/cover}
+.lb-fig img{height:min(78svh,calc(88vw * 1.26));width:auto;max-width:88vw;object-fit:contain;background:#1f1a16}
+
+/* ===== Principles: the words live on a pinned sticky note, drawn like the hero ===== */
+.tcard .txt{position:relative;align-self:center;padding:calc(64*var(--u)) calc(56*var(--u)) calc(56*var(--u));background:#fdf7ee;border-radius:calc(6*var(--u));
+  box-shadow:0 0 0 2.5px #1f1a16,calc(10*var(--u)) calc(12*var(--u)) 0 -1px #1f1a16,0 calc(40*var(--u)) calc(60*var(--u)) calc(-30*var(--u)) rgba(40,30,20,.35);
+  transform-origin:50% 0;rotate:var(--rot,1.6deg);transition:rotate 1.1s var(--spring)}
+.tcard .txt::before{content:"";position:absolute;left:50%;top:calc(-26*var(--u));width:calc(50*var(--u));height:calc(46*var(--u));margin-left:calc(-25*var(--u));
+  background:url(assets/pin.png) center/contain no-repeat;filter:drop-shadow(0 calc(4*var(--u)) calc(3*var(--u)) rgba(0,0,0,.3));transform:translateY(calc(-30*var(--u))) scale(1.2);opacity:0;transition:transform .7s var(--spring) .15s,opacity .3s .15s}
+.tcard .txt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(transparent 0 calc(31*var(--u)),rgba(60,45,30,.06) calc(31*var(--u)) calc(32*var(--u)));mask:linear-gradient(transparent calc(150*var(--u)),#000 calc(150*var(--u)))}
+.panel.on .tcard .txt{rotate:0deg}
+.panel.on .tcard .txt::before{transform:none;opacity:1}
+.panel:nth-child(2) .tcard .txt{--rot:-1.8deg}.panel:nth-child(3) .tcard .txt{--rot:1.2deg}.panel:nth-child(4) .tcard .txt{--rot:-1.4deg}
+.tcard .idx{position:absolute;right:calc(40*var(--u));top:calc(34*var(--u));font-size:calc(84*var(--u));-webkit-text-stroke:1.2px rgba(31,26,22,.2)}
+.tcard h3{margin-top:0}
+.tcard .tag{position:absolute;right:calc(-34*var(--u));bottom:calc(-42*var(--u));margin:0;padding:calc(20*var(--u)) calc(22*var(--u));max-width:calc(220*var(--u));
+  background:var(--mustard);color:#1f1a16;border-radius:calc(4*var(--u));font:400 calc(26*var(--u))/1.05 Hand,var(--serif);text-align:center;
+  box-shadow:0 0 0 2.5px #1f1a16,calc(5*var(--u)) calc(6*var(--u)) 0 -1px #1f1a16;rotate:7deg;scale:.6;opacity:0;transition:rotate .9s var(--spring) .35s,scale .9s var(--spring) .35s,opacity .3s .35s}
+.tcard .tag::before{content:none}
+.panel.on .tcard .tag{rotate:-4deg;scale:1;opacity:1}
+.panel:nth-child(2) .tcard .tag{background:#cfd8b8}.panel:nth-child(3) .tcard .tag{background:#f2c9b6}.panel:nth-child(4) .tcard .tag{background:#d9d2ec}
+@media (max-width:900px){
+  .tcard .txt{margin:0 22px 40px;padding:40px 24px 54px;rotate:0deg}
+  .tcard .txt::before{transform:none;opacity:1;top:-20px;width:40px;height:38px;margin-left:-20px}
+  .tcard .idx{font-size:52px;right:20px;top:18px}
+  .tcard .tag{right:-6px;bottom:-30px;font-size:20px;padding:12px 14px;max-width:180px;opacity:1;scale:1;rotate:-4deg}
+}
+
+/* ===== Recent projects: a design-canvas frame (same language as the footer's ruler + selection) ===== */
+.board{border-radius:calc(10*var(--u));padding:0;background:
+   radial-gradient(circle,rgba(160,128,80,.30) 1.15px,transparent 1.7px) calc(10*var(--u)) calc(10*var(--u))/calc(22*var(--u)) calc(22*var(--u)),
+   linear-gradient(#f8f2e8,#f3ebdf);
+  box-shadow:0 0 0 1px rgba(31,26,22,.16),0 1px 0 calc(1*var(--u)) rgba(255,255,255,.6) inset,0 calc(2*var(--u)) calc(4*var(--u)) rgba(40,30,20,.05),0 calc(40*var(--u)) calc(80*var(--u)) calc(-36*var(--u)) rgba(40,30,20,.32)}
+.board::before{content:"#  Recent projects";inset:auto auto calc(100% + 10*var(--u)) 0;background:none;box-shadow:none;border:0;border-radius:0;
+  font:500 max(11px,calc(14*var(--u)))/1 var(--sans);color:#8b8177;letter-spacing:.01em;white-space:pre}
+.board::after{content:"4 projects";inset:auto 0 calc(100% + 10*var(--u)) auto;background:none;
+  font:500 max(11px,calc(14*var(--u)))/1 var(--sans);color:#b0a69a}
+.pcard .paper{box-shadow:0 1px 1px rgba(40,30,20,.1),0 calc(18*var(--u)) calc(30*var(--u)) calc(-16*var(--u)) rgba(40,30,20,.42)}
+/* figma-style selection that follows the card you point at */
+.psel{position:absolute;z-index:4;pointer-events:none;border:1.5px solid #0d99ff;opacity:0;transition:left .45s var(--ease),top .45s var(--ease),width .45s var(--ease),height .45s var(--ease),opacity .25s}
+.psel.on{opacity:1}
+.psel i{position:absolute;width:8px;height:8px;background:#fff;border:1.5px solid #0d99ff}
+.psel i:nth-child(1){left:-5px;top:-5px}.psel i:nth-child(2){right:-5px;top:-5px}.psel i:nth-child(3){left:-5px;bottom:-5px}.psel i:nth-child(4){right:-5px;bottom:-5px}
+.psel span{position:absolute;left:50%;top:calc(100% + 10px);transform:translateX(-50%);padding:3px 7px;border-radius:4px;background:#0d99ff;color:#fff;font:600 11px/1.2 var(--sans);white-space:nowrap}
+@media (max-width:900px){.psel{display:none}
+  #cards{background:radial-gradient(circle,rgba(160,128,80,.3) 1.1px,transparent 1.6px) 0 0/16px 16px,linear-gradient(#f8f2e8,#f3ebdf)!important;border-radius:10px!important;
+    box-shadow:0 0 0 1px rgba(31,26,22,.16),0 30px 50px -30px rgba(40,30,20,.3)!important;margin:0 16px}}
+@media (prefers-reduced-motion:reduce){.psel{transition:opacity .2s}}
+
+.tcard .txt::after{content:none}
+.tcard .idx{position:static;display:block;margin-bottom:calc(18*var(--u));font:600 max(11px,calc(14*var(--u)))/1 var(--sans);letter-spacing:.18em;color:#a39a8f;-webkit-text-stroke:0}
+.tcard .idx i{display:inline;font-style:normal;color:#c9c0b4;margin-left:.5em}
+@media (max-width:900px){.tcard .idx{font-size:12px;margin-bottom:12px}}
+
+/* one rhythm: every title sits ~120u below its section edge, every section ends with ~120u of air */
+@media (min-width:901px){
+  .projects{margin-top:calc(11*var(--u))}
+  .studio{margin-top:calc(56*var(--u));margin-bottom:calc(77*var(--u))}
+  .nine{margin-top:calc(-24*var(--u))}
+  .words{margin-top:calc(56*var(--u))}
+  .life{margin-top:calc(-30*var(--u))}
+  .think .pin-wrap{padding-bottom:0}
+}
+
+/* ===== Principles v3: illustration + pinned handwritten note on the left, an easy read on the right ===== */
+.pv{display:grid;grid-template-columns:calc(660*var(--u)) 1fr;column-gap:calc(110*var(--u));align-items:center;height:100%}
+.p-art{position:relative;height:calc(620*var(--u))}
+.p-art::before{content:"";position:absolute;left:calc(70*var(--u));right:calc(10*var(--u));top:calc(40*var(--u));bottom:calc(30*var(--u));border-radius:calc(28*var(--u));background:var(--tint);
+  box-shadow:inset 0 0 0 1px rgba(31,26,22,.07);transform:scale(.94);opacity:.6;transition:transform 1.2s var(--ease),opacity 1.2s var(--ease)}
+.panel.on .p-art::before{transform:none;opacity:1}
+.p-art .scene{left:calc(110*var(--u));top:calc(70*var(--u));width:calc(520*var(--u));height:calc(520*var(--u));margin:0;position:absolute;pointer-events:none}
+.pnote{position:absolute;left:calc(-24*var(--u));top:calc(-10*var(--u));z-index:2;width:calc(236*var(--u));padding:calc(34*var(--u)) calc(24*var(--u)) calc(22*var(--u));background:#fdf8ef;border-radius:calc(4*var(--u));
+  box-shadow:0 0 0 1.5px rgba(31,26,22,.85),0 calc(18*var(--u)) calc(30*var(--u)) calc(-14*var(--u)) rgba(40,30,20,.4);transform-origin:50% 0;
+  rotate:-5deg;translate:0 calc(-26*var(--u));opacity:0;transition:rotate 1s var(--spring) .2s,translate 1s var(--spring) .2s,opacity .4s .2s}
+.pnote::before{content:"";position:absolute;left:50%;top:calc(-22*var(--u));width:calc(46*var(--u));height:calc(42*var(--u));margin-left:calc(-23*var(--u));
+  background:url(assets/pin.png) center/contain no-repeat;filter:drop-shadow(0 calc(3*var(--u)) calc(3*var(--u)) rgba(0,0,0,.28))}
+.pnote span{display:block;font:400 calc(31*var(--u))/1.18 Hand,var(--serif);color:#1f1a16}
+.pnote small{display:block;margin-top:calc(14*var(--u));font:500 calc(13*var(--u))/1 var(--sans);color:#8b8177}
+.panel.on .pnote{rotate:-3deg;translate:0 0;opacity:1}
+.p-txt{max-width:calc(560*var(--u));will-change:transform}
+.pidx{display:block;font:600 max(11px,calc(14*var(--u)))/1 var(--sans);letter-spacing:.18em;color:#8b8177}
+.pidx i{font-style:normal;color:#c2b8ab;margin-left:.5em}
+.p-txt h3{margin-top:calc(22*var(--u));font:400 calc(62*var(--u))/1.08 var(--serif);letter-spacing:-.015em;color:#1f1a16}
+.p-txt h3 .mark{position:relative;display:inline-block}
+.p-txt h3 .mark .hlr{position:absolute;left:-3%;right:-3%;bottom:8%;height:36%;background:var(--mustard);opacity:.34;border-radius:3px;z-index:-1;transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .3s}
+.panel.on .p-txt h3 .mark .hlr{transform:scaleX(1)}
+.pcopy{margin-top:calc(28*var(--u))}
+.pcopy p{font:400 max(15px,calc(21*var(--u)))/1.68 var(--sans);color:#3a332e;opacity:.35;translate:0 calc(10*var(--u));transition:opacity .8s var(--ease),translate .8s var(--ease)}
+.pcopy p + p{margin-top:calc(16*var(--u))}
+.panel.on .pcopy p{opacity:1;translate:0 0}.panel.on .pcopy p + p{transition-delay:.12s}
+.ptag{display:inline-flex;align-items:center;gap:.55em;margin-top:calc(30*var(--u));padding:calc(10*var(--u)) calc(16*var(--u));border-radius:999px;background:var(--tint);
+  font:500 max(13px,calc(15*var(--u)))/1 var(--sans);color:#1f1a16;box-shadow:inset 0 0 0 1px rgba(31,26,22,.12)}
+.ptag::before{content:"";width:calc(7*var(--u));height:calc(7*var(--u));min-width:6px;min-height:6px;border-radius:50%;background:#1f1a16}
+@media (max-width:900px){
+  .pv{grid-template-columns:1fr;row-gap:20px;height:auto;padding:0 20px}
+  .p-art{height:auto;aspect-ratio:1/0.92;max-width:520px;width:100%;margin:0 auto}
+  .p-art::before{left:6%;right:0;top:6%;bottom:2%;transform:none;opacity:1}
+  .p-art .scene{left:12%;top:12%;width:80%;height:auto;aspect-ratio:1}
+  .pnote{width:46%;padding:26px 16px 16px;rotate:-3deg;translate:0;opacity:1;top:-4px}
+  .pnote::before{top:-18px;width:36px;height:34px;margin-left:-18px}
+  .pnote span{font-size:clamp(18px,5vw,24px)}.pnote small{font-size:11px;margin-top:8px}
+  .p-txt{max-width:none;transform:none!important}.p-txt h3{font-size:32px;margin-top:12px}.p-txt h3 .mark .hlr{transform:scaleX(1)}
+  .pcopy{margin-top:16px}.pcopy p{font-size:16px;opacity:1;translate:0}.ptag{margin-top:20px;padding:8px 14px;font-size:13px}
+  .think .panel{padding-bottom:64px}
+}
+@media (prefers-reduced-motion:reduce){.pnote,.pcopy p,.p-art::before{transition:none}}
+
+.pkey{position:absolute;right:calc(-30*var(--u));bottom:calc(-4*var(--u));z-index:2;padding:calc(18*var(--u)) calc(26*var(--u)) calc(20*var(--u));background:var(--mustard);border-radius:calc(4*var(--u));text-align:left;
+  box-shadow:0 0 0 1.5px rgba(31,26,22,.85),0 calc(18*var(--u)) calc(30*var(--u)) calc(-14*var(--u)) rgba(40,30,20,.45);
+  rotate:9deg;scale:.7;opacity:0;transition:rotate 1s var(--spring) .45s,scale 1s var(--spring) .45s,opacity .35s .45s}
+.pkey::before{content:"";position:absolute;left:50%;top:calc(-13*var(--u));width:calc(84*var(--u));height:calc(26*var(--u));margin-left:calc(-42*var(--u));background:rgba(255,253,246,.72);rotate:-3deg;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.pkey small{display:block;font:600 max(10px,calc(12*var(--u)))/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:rgba(31,26,22,.6)}
+.pkey b{display:block;margin-top:calc(8*var(--u));font:400 calc(40*var(--u))/1.02 Hand,var(--serif);color:#1f1a16;max-width:calc(250*var(--u))}
+.panel.on .pkey{rotate:4deg;scale:1;opacity:1}
+.panel:nth-child(2) .pkey{background:#c9d6a6}.panel:nth-child(3) .pkey{background:#f4b9a0}.panel:nth-child(4) .pkey{background:#cfc5ee}
+@media (max-width:900px){.pkey{right:-4px;bottom:-14px;padding:12px 16px 14px;rotate:4deg;scale:1;opacity:1}.pkey::before{top:-10px;width:60px;height:20px;margin-left:-30px}.pkey small{font-size:10px}.pkey b{font-size:clamp(22px,6vw,28px);margin-top:6px;max-width:200px}}
 </style>
 </head>
 <body>
@@ -642,21 +778,25 @@ body.lblock{overflow:hidden}
     <div class="pin-wrap"><div class="stage">
       <h2 data-eyebrow="Principles"><span class="w" style="--i:0"><span>The</span></span> <span class="w" style="--i:1"><span>Thinking</span></span> <span class="w" style="--i:2"><span>Behind</span></span> <span class="w" style="--i:3"><span>the</span></span> <span class="w" style="--i:4"><span>Pixels</span></span></h2>
       <div class="rail" id="rail">
-        <article class="panel" aria-label="Attention to detail"><div class="tcard" style="--tint:#efe4d0">
-          <div class="art"><div class="scene" data-scene="scenes/p1.html" aria-hidden="true"></div></div>
-          <div class="txt"><span class="idx">01<i>/ 04</i></span><h3>Attention to <span class="mark">detail<i class="hlr"></i></span></h3><div class="copy"><p>I’m the kind of designer who notices when a button is two pixels off. Six years in, that habit has only got stronger.</p><p>I studied design for four years, and I’ve spent the last two-plus doing it for real, for banks, startups and brands that had nothing in common. College gave me the basics. Real users are where I actually learned.</p></div><span class="tag">Learning by doing</span></div>
+        <article class="panel" aria-label="Attention to detail"><div class="pv" style="--tint:#f3e7d3">
+          <div class="p-art"><div class="scene" data-scene="scenes/p1.html" aria-hidden="true"></div>
+            <div class="pnote" aria-hidden="true"><span>“I notice when a button is two pixels off.”</span><small>— my rule of thumb</small></div><div class="pkey"><small>Key word</small><b>Learning by doing</b></div></div>
+          <div class="p-txt"><span class="pidx">01<i>/ 04</i></span><h3>Attention to <span class="mark">detail<i class="hlr"></i></span></h3><div class="pcopy"><p>That habit has only got stronger with time. I studied design for four years, and I’ve spent the last two-plus doing it for real, for banks, startups and brands that had nothing in common.</p><p>College gave me the basics. Real users are where I actually learned.</p></div></div>
         </div></article>
-        <article class="panel" aria-label="Empathy"><div class="tcard" style="--tint:#e4ead9">
-          <div class="art"><div class="scene" data-scene="scenes/p2.html" aria-hidden="true"></div></div>
-          <div class="txt"><span class="idx">02<i>/ 04</i></span><h3><span class="mark">Empathy<i class="hlr"></i></span> first</h3><div class="copy"><p>Most of what I know came from watching people use things. The customer who gives up on a form halfway. The person who calls support because one label wasn’t clear. Those moments tell you more than any brief. So I listen, I watch, and I keep asking why until the real problem shows up.</p></div><span class="tag">Curiosity</span></div>
+        <article class="panel" aria-label="Empathy"><div class="pv" style="--tint:#e3ead6">
+          <div class="p-art"><div class="scene" data-scene="scenes/p2.html" aria-hidden="true"></div>
+            <div class="pnote" aria-hidden="true"><span>“I keep asking why until the real problem shows up.”</span><small>— my rule of thumb</small></div><div class="pkey"><small>Key word</small><b>Curiosity</b></div></div>
+          <div class="p-txt"><span class="pidx">02<i>/ 04</i></span><h3><span class="mark">Empathy<i class="hlr"></i></span> first</h3><div class="pcopy"><p>Most of what I know came from watching people use things. The customer who gives up on a form halfway. The person who calls support because one label wasn’t clear.</p><p>Those moments tell you more than any brief. So I listen, and I watch.</p></div></div>
         </div></article>
-        <article class="panel" aria-label="Designing for delight"><div class="tcard" style="--tint:#f3e0d6">
-          <div class="art"><div class="scene" data-scene="scenes/p3.html" aria-hidden="true"></div></div>
-          <div class="txt"><span class="idx">03<i>/ 04</i></span><h3>Designing for <span class="mark">delight<i class="hlr"></i></span></h3><div class="copy"><p>Getting it to work is step one. But I want people to enjoy using it too. A friendly line of copy, a small animation, an illustration that makes someone smile. That’s the stuff people remember.</p><p>Which is probably why I still draw. Branding and illustration aren’t a side thing for me. They’re how I give a product its own personality.</p></div><span class="tag">Giving products a personality</span></div>
+        <article class="panel" aria-label="Designing for delight"><div class="pv" style="--tint:#f6ddd0">
+          <div class="p-art"><div class="scene" data-scene="scenes/p3.html" aria-hidden="true"></div>
+            <div class="pnote" aria-hidden="true"><span>“Getting it to work is only step one.”</span><small>— my rule of thumb</small></div><div class="pkey"><small>Key word</small><b>Giving products a personality</b></div></div>
+          <div class="p-txt"><span class="pidx">03<i>/ 04</i></span><h3>Designing for <span class="mark">delight<i class="hlr"></i></span></h3><div class="pcopy"><p>I want people to enjoy using it too. A friendly line of copy, a small animation, an illustration that makes someone smile. That’s the stuff people remember.</p><p>Which is probably why I still draw. Branding and illustration are how I give a product its own personality.</p></div></div>
         </div></article>
-        <article class="panel" aria-label="Human judgement, AI speed"><div class="tcard" style="--tint:#e6e2f0">
-          <div class="art"><div class="scene" data-scene="scenes/p4.html" aria-hidden="true"></div></div>
-          <div class="txt"><span class="idx">04<i>/ 04</i></span><h3>Human <span class="mark">judgement<i class="hlr"></i></span>, AI speed</h3><div class="copy"><p>Lately, AI has become a big part of how I work. I use it to try more ideas, build prototypes quicker and test with users earlier. It saves me time. Deciding what’s actually good is still my job.</p><p>I don’t want to make things that are just okay. I want to make things people come back to.</p></div><span class="tag">Designing for return visits</span></div>
+        <article class="panel" aria-label="Human judgement, AI speed"><div class="pv" style="--tint:#e4e0f1">
+          <div class="p-art"><div class="scene" data-scene="scenes/p4.html" aria-hidden="true"></div>
+            <div class="pnote" aria-hidden="true"><span>“AI saves me time. Deciding what’s good is still my job.”</span><small>— my rule of thumb</small></div><div class="pkey"><small>Key word</small><b>Designing for return visits</b></div></div>
+          <div class="p-txt"><span class="pidx">04<i>/ 04</i></span><h3>Human <span class="mark">judgement<i class="hlr"></i></span>, AI speed</h3><div class="pcopy"><p>Lately, AI has become a big part of how I work. I use it to try more ideas, build prototypes quicker and test with users earlier.</p><p>I don’t want to make things that are just okay. I want to make things people come back to.</p></div></div>
         </div></article>
       </div>
       <div class="dots tprog" id="tdots"><button aria-label="Go to part 1"><b>01</b>Detail</button><button aria-label="Go to part 2"><b>02</b>Empathy</button><button aria-label="Go to part 3"><b>03</b>Delight</button><button aria-label="Go to part 4"><b>04</b>Judgement</button></div>
@@ -877,7 +1017,7 @@ function strip(root, items, opt) {
     if (moved > 6 && !root.classList.contains('drag')) { root.classList.add('drag'); try { root.setPointerCapture(pid); } catch (_) {} } });
   const end = () => { drag = false; root.classList.remove('drag'); v = Math.max(-3, Math.min(3, v)); };
   root.addEventListener('pointerup', end); root.addEventListener('pointercancel', end);
-  track.addEventListener('click', e => { const b = e.target.closest('.fc'); if (!b) return; if (moved > 6) { moved = 0; return; } LB.open(items, +b.dataset.k, b.querySelector('img')); });
+  root.addEventListener('click', e => { let b = e.target.closest('.fc'); if (!b) b = cards.find(c => { const r = c.getBoundingClientRect(); return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom; }); if (!b) return; if (moved > 6) { moved = 0; return; } LB.open(items, +b.dataset.k, b.querySelector('img')); });
   new IntersectionObserver(es => es.forEach(e => vis = e.isIntersecting), { rootMargin: '120px' }).observe(root);
   (function run(t) {
     const dt = Math.min(48, t - last); last = t;
@@ -952,9 +1092,9 @@ new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.
       const vis = Math.max(0, 1 - ad * 1.15);
       p.style.opacity = (vis * vis * (3 - 2 * vis)).toFixed(3);
       p.classList.toggle('on', ad < .35);
-      const art = p.querySelector('.art'), tx = p.querySelector('.txt');   // two depths: the drawing lags, the words lead
-      if (art) art.style.transform = `translate3d(${(d * -CW * .22).toFixed(1)}px,0,0)`;
-      if (tx) tx.style.transform = `translate3d(${(d * CW * .12).toFixed(1)}px,0,0)`;
+      const art = p.querySelector('.p-art'), tx = p.querySelector('.p-txt');   // two depths: the drawing lags, the words lead
+      if (art) art.style.transform = `translate3d(${(d * -CW * .16).toFixed(1)}px,0,0)`;
+      if (tx) tx.style.transform = `translate3d(${(d * CW * .08).toFixed(1)}px,0,0)`;
     });
     const on = Math.round(cp * 3); dots.forEach((b, i) => b.classList.toggle('on', i === on)); dots[0] && dots[0].parentElement.style.setProperty('--p', (cp * 100).toFixed(2) + '%');
   }
@@ -1086,6 +1226,18 @@ window.__render=render;window.__ready=true;
 let on=false,t0=performance.now(),acc=0,lt=t0;
 new IntersectionObserver(es=>es.forEach(e=>{on=e.isIntersecting;lt=performance.now();}),{rootMargin:'200px'}).observe(NS);
 render(0);(function L(n){if(on){acc+=Math.min(50,n-lt);render(acc/1000);}lt=n;requestAnimationFrame(L);})(t0);}
+
+/* selection box on the projects frame */
+(() => { const sec = document.querySelector('.projects'); if (!sec || !matchMedia('(hover:hover)').matches) return;
+  const sel = document.createElement('div'); sel.className = 'psel'; sel.innerHTML = '<i></i><i></i><i></i><i></i><span></span>'; sec.appendChild(sel);
+  sec.addEventListener('mouseover', e => { const c = e.target.closest('.pcard'); if (!c) return;
+    const a = sec.getBoundingClientRect(), r = c.querySelector('.paper').getBoundingClientRect();
+    sel.style.left = (r.left - a.left - 6) + 'px'; sel.style.top = (r.top - a.top - 6) + 'px'; sel.style.width = (r.width + 12) + 'px'; sel.style.height = (r.height + 12) + 'px';
+    sel.querySelector('span').textContent = (c.querySelector('h3,.t,b')?.textContent || 'Project').trim() + ' · ' + Math.round(r.width) + ' × ' + Math.round(r.height);
+    sel.classList.add('on'); });
+  sec.addEventListener('mouseleave', () => sel.classList.remove('on'));
+  document.getElementById('cards')?.addEventListener('mouseleave', () => sel.classList.remove('on'));
+})();
 </script>
 </body>
 </html>
