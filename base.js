@@ -53,7 +53,11 @@ function step(k, i, j, near, speed) {
 }
 function frame() {
   requestAnimationFrame(frame);
-  if (!active || reduce || scrollY > innerHeight * 1.05) return;     // the field only lives behind the hero
+  if (scrollY > innerHeight * 1.05) {                                 // beyond the hero: settle the field once, so no warm dots linger
+    if (live.size || ripples.length) { live.forEach(k => { ox[k] = oy[k] = vx[k] = vy[k] = heat[k] = 0; }); live.clear(); ripples = [];
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(base, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    active = false; return; }
+  if (!active || reduce) return;
   mvx = mvx * .8 + (mx - pmx) * .2; mvy = mvy * .8 + (my - pmy) * .2; pmx = mx; pmy = my;
   ripples.forEach(r => r.t += 1 / 60); ripples = ripples.filter(r => r.t < 1.6);
   const speed = Math.min(1, Math.hypot(mvx, mvy) / 30);
@@ -116,9 +120,7 @@ pill && $$('.tab', pill).forEach(t => {
 });
 /* hide nav on scroll down, show on scroll up */
 let ly = scrollY; const nav = $('.nav');
-addEventListener('scroll', () => { const y = scrollY; if (nav) { nav.classList.toggle('away', y > ly && y > 240); nav.classList.toggle('docked', y > 120); } ly = y; }, { passive: true });
-/* on desktop, bringing the pointer to the top edge brings the full header back */
-if (nav && matchMedia('(hover:hover)').matches) addEventListener('mousemove', e => nav.classList.toggle('peek', e.clientY < 110 && nav.classList.contains('docked')), { passive: true });
+addEventListener('scroll', () => { nav && nav.classList.toggle('scrolled', scrollY > 8); }, { passive: true });
 
 /* ---------- magnetic ---------- */
 window.magnet = (sel, k = .3) => $$(sel).forEach(el => {

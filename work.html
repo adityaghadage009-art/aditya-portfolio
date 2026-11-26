@@ -54,6 +54,46 @@ h1 .w > span{display:inline-block;transform:translateY(105%);transition:transfor
  .title h3{font-size:22px}.tags span{font-size:12.5px;line-height:26px}.filter{height:42px}.filter button{padding:0 16px;font-size:14px}.filter .hl{height:34px}
  .soon{grid-template-columns:1fr;margin:80px -20px 0;padding:60px 20px}.soon h2{font-size:36px;line-height:44px}.soon p{font-size:16px;line-height:25px;margin-top:14px}.soon .btn{height:48px;padding:0 22px;font-size:15px;border-radius:8px;margin-top:24px!important}}
 main.page{position:relative;z-index:1;background:#f4e9dc url(assets/paper-tile.jpg) center top/100% auto repeat-y}
+
+/* ===== hero-matched work page ===== */
+main.page{background:transparent!important}
+.ovl{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;gap:calc(14*var(--u));padding:calc(26*var(--u));
+  background:linear-gradient(to top,rgba(24,19,15,.78) 0%,rgba(24,19,15,.35) 45%,rgba(24,19,15,0) 70%);opacity:0;transition:opacity .55s var(--ease)}
+.ovl .tags{margin:0;gap:calc(8*var(--u))}
+.ovl .tags span{color:#fff;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-size:max(12px,calc(14*var(--u)));line-height:max(26px,calc(30*var(--u)));opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.ovl .go{align-self:flex-start;font:600 max(12px,calc(13*var(--u)))/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mustard);opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease) .2s,transform .6s var(--ease) .2s}
+.ovl .go i{font-style:normal;display:inline-block;margin-left:.4em}
+.card:hover .ovl,.card:focus-visible .ovl{opacity:1}
+.card:hover .ovl .tags span,.card:focus-visible .ovl .tags span,.card:hover .ovl .go,.card:focus-visible .ovl .go{opacity:1;transform:none}
+.ovl .tags span:nth-child(2){transition-delay:.05s}.ovl .tags span:nth-child(3){transition-delay:.1s}.ovl .tags span:nth-child(4){transition-delay:.15s}
+@media (hover:none){.ovl{opacity:1;background:linear-gradient(to top,rgba(24,19,15,.7),rgba(24,19,15,0) 55%)}.ovl .tags span{opacity:1;transform:none}.ovl .go{display:none}}
+
+.soon{display:block;margin:calc(150*var(--u)) 0 0;padding:0 0 calc(130*var(--u))}
+.soon-in{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:calc(80*var(--u))}
+.soon-ey{display:inline-flex;align-items:center;gap:10px;font:600 max(11px,calc(13*var(--u)))/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#8b8177}
+.soon-ey i{width:8px;height:8px;border-radius:50%;background:#e2574c;animation:soonP 2s ease-in-out infinite}
+@keyframes soonP{50%{opacity:.35}}
+.soon h2{margin-top:calc(22*var(--u));font:400 calc(64*var(--u))/1.1 var(--serif);letter-spacing:-.012em}
+.soon .mark{position:relative;display:inline-block}
+.soon .mark .hlr{position:absolute;left:-3%;right:-3%;bottom:8%;height:36%;background:var(--mustard);opacity:.34;border-radius:3px;z-index:-1;transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .5s}
+.soon.in .mark .hlr,.soon.on .mark .hlr,.soon.shown .mark .hlr{transform:scaleX(1)}
+.soon p{max-width:calc(480*var(--u));margin-top:calc(22*var(--u));font-size:calc(19*var(--u));line-height:calc(31*var(--u));color:var(--text-2)}
+.soon-go{margin-top:calc(34*var(--u))}
+.soon-art{position:relative;height:calc(440*var(--u))}
+.sheet{position:absolute;background:#fffdf8;border:2.5px solid #1f1a16;border-radius:calc(14*var(--u));box-shadow:0 calc(22*var(--u)) calc(40*var(--u)) calc(-24*var(--u)) rgba(40,30,20,.45);animation:sheetF 6s ease-in-out infinite}
+.sheet b{display:block;height:calc(12*var(--u));border-radius:6px;background:#e6dccb;margin:calc(18*var(--u)) calc(22*var(--u)) 0}
+.sheet b:first-child{background:var(--mustard);width:45%}
+.s-a{left:4%;top:8%;width:44%;height:52%;--r:-6deg;background:#efe4d0}
+.s-b{left:40%;top:0;width:42%;height:46%;--r:5deg;animation-delay:-2s}
+.s-b b:first-child{background:#6b6a3a}
+.s-c{left:30%;top:42%;width:48%;height:44%;--r:-2deg;animation-delay:-4s;display:grid;place-items:center;background:#1f1a16}
+.s-c span{font:400 calc(64*var(--u))/1 var(--serif);color:#fffdf8;letter-spacing:.04em}
+@keyframes sheetF{0%,100%{transform:rotate(var(--r)) translateY(0)}50%{transform:rotate(calc(var(--r) + 1.2deg)) translateY(calc(-8*var(--u)))}}
+.soon-art .dog{position:absolute;right:6%;bottom:2%;width:calc(190*var(--u));height:auto;transform-origin:50% 100%;animation:dogB 3.2s ease-in-out infinite;filter:drop-shadow(0 calc(10*var(--u)) calc(10*var(--u)) rgba(40,30,20,.2))}
+@keyframes dogB{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(3deg) translateY(-3px)}}
+@media (max-width:900px){.soon{margin-top:80px;padding-bottom:70px}.soon-in{grid-template-columns:1fr;gap:40px}.soon h2{font-size:36px}.soon p{font-size:16px;line-height:26px;max-width:none}.soon-art{height:300px}.soon-art .dog{width:130px}.s-c span{font-size:44px}}
+@media (prefers-reduced-motion:reduce){.sheet,.soon-art .dog,.soon-ey i{animation:none}}
 </style>
 </head>
 <body>
@@ -85,19 +125,27 @@ main.page{position:relative;z-index:1;background:#f4e9dc url(assets/paper-tile.j
     <h1><span class="w"><span>Selected</span></span> <span class="w"><span>Work</span></span></h1>
     <div class="filter" id="filter">
       <span class="hl"></span>
-      <button data-f="all" class="on">All<span class="n">10</span></button>
-      <button data-f="ux">UX/UI<span class="n">02</span></button>
-      <button data-f="visual">Visual &amp; branding<span class="n">08</span></button>
+      <button data-f="all" class="on">All</button>
+      <button data-f="ux">UX/UI</button>
+      <button data-f="visual">Visual &amp; branding</button>
     </div>
   </section>
   <section class="grid" id="grid"></section>
-  <section class="soon rv">
-    <div>
-      <h2>New Projects<br>Coming Soon</h2>
-      <p>Something new is on the canvas right now — sketches, second thoughts and a lot of coffee.</p>
-      <a class="btn btn-primary" href="mailto:adityaghadage009@gmail.com" data-hi style="margin-top:30px">Say hello in the meantime <span class="ic">→</span></a>
+  <section class="soon rv" aria-label="New projects coming soon">
+    <div class="soon-in">
+      <div class="soon-txt">
+        <span class="soon-ey"><i></i>On the canvas right now</span>
+        <h2>New projects are <span class="mark">brewing<i class="hlr"></i></span>.</h2>
+        <p>Sketches, second thoughts and a lot of coffee. The pup is guarding the files until they’re ready.</p>
+        <div class="soon-go"><a class="btn btn-primary" href="mailto:adityaghadage009@gmail.com" data-hi>Say hi in the meantime <span class="ic">👋</span></a></div>
+      </div>
+      <div class="soon-art" aria-hidden="true">
+        <div class="sheet s-a"><b></b><b></b><b></b></div>
+        <div class="sheet s-b"><b></b><b></b></div>
+        <div class="sheet s-c"><span>WIP</span></div>
+        <img class="dog" src="assets/dog.svg" alt="">
+      </div>
     </div>
-    <img src="assets/desk.webp" alt="A desk with a monitor showing a design in progress, a calendar and a dog peeking over the screen" loading="lazy">
   </section>
 </main>
 <footer class="page">
@@ -125,10 +173,10 @@ grid.innerHTML=P.map((p,i)=>`
   <div class="frame">
    ${p.v?`<img class="poster" src="assets/posters/${p.v}.webp" alt="" loading="lazy" decoding="async"><video data-src="assets/${p.v}.mp4" muted loop playsinline preload="none" poster="assets/posters/${p.v}.webp"></video>`:`<div class="ph"><span>${p.t.split(/ - | Brand/)[0]}</span><small>COVER COMING</small></div>`}
    <div class="glare"></div>
+   <div class="ovl"><div class="tags">${p.tags.map(x=>`<span>${x.replace(/\.$/,'')}</span>`).join('')}</div></div>
   </div>
   <div class="title"><h3>${p.t}<span class="ar">↗</span></h3><span class="cat">${p.c==='ux'?'UX / UI':'VISUAL'}</span></div>
-  <div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div>
- </a>`).join('');
+</a>`).join('');
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 <script src="base.js"></script>
