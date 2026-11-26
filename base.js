@@ -86,7 +86,7 @@ window.bindCursor = (root = document) => $$('a,button,[data-cursor]', root).forE
   el.addEventListener('mouseenter', () => {
     const k = el.dataset.cursor || (el.closest('.card') ? 'view' : 'link');
     cur.dataset.k = k; cur.classList.add(k === 'view' ? 'view' : 'link');
-    if (el.dataset.label) cur.querySelector('span').textContent = el.dataset.label; else cur.querySelector('span').textContent = 'VIEW';
+    if (el.dataset.label) cur.querySelector('span').textContent = el.dataset.label.replace(/<br\s*\/?>/gi, '\n').replace(/^VIEW CASE STUDY$/, 'VIEW\nCASE STUDY').replace(/^COMING SOON$/, 'COMING\nSOON'); else cur.querySelector('span').textContent = 'VIEW';
     dot.classList.toggle('hide', k === 'view');
   });
   el.addEventListener('mouseleave', () => { cur.classList.remove('view', 'link'); dot.classList.remove('hide'); });
@@ -188,8 +188,8 @@ document.fonts && document.fonts.ready.then(() => syncNav());
   /* Figma-style selection follows the key you point at */
   f.querySelectorAll('.key').forEach(k => {
     const show = () => { const sr = st.getBoundingClientRect(), r = k.getBoundingClientRect(), pad = 8;
-      sel.style.transform = `translate(${r.left - sr.left - pad}px,${r.top - sr.top - pad}px)`; sel.style.width = r.width + pad * 2 + 'px'; sel.style.height = r.height + pad * 2 + 'px';
-      lab.textContent = `${k.dataset.name} · ${Math.round(r.width)} × ${Math.round(r.height)}`; sel.classList.add('on'); };
+      const first = !sel.classList.contains('on'); if (first) sel.style.transition = 'opacity .3s cubic-bezier(.2,.8,.2,1)'; sel.style.transform = `translate(${r.left - sr.left - pad}px,${r.top - sr.top - pad}px)`; sel.style.width = r.width + pad * 2 + 'px'; sel.style.height = r.height + pad * 2 + 'px';
+      lab.textContent = `${k.dataset.name} · ${Math.round(r.width)} × ${Math.round(r.height)}`; sel.classList.add('on'); if (first) { void sel.offsetWidth; sel.style.transition = ''; } };
     k.addEventListener('mouseenter', show); k.addEventListener('focus', show);
     k.addEventListener('mouseleave', () => sel.classList.remove('on')); k.addEventListener('blur', () => sel.classList.remove('on'));
     k.addEventListener('click', e => { if (k.getAttribute('aria-disabled') === 'true') { e.preventDefault(); k.classList.remove('nope'); void k.offsetWidth; k.classList.add('nope'); }

@@ -41,7 +41,7 @@ img{display:block}
 .cur-dot{width:7px;height:7px;margin:-3.5px;border-radius:50%;background:var(--ink);transition:opacity .2s}
 .cur{width:38px;height:38px;margin:-19px;border-radius:50%;border:1.4px solid var(--ink);display:grid;place-items:center;
   transition:width .45s var(--ease),height .45s var(--ease),margin .45s var(--ease),background .3s,border-color .3s,opacity .2s}
-.cur span{font:700 10.5px/1.15 var(--sans);letter-spacing:1.6px;text-align:center;color:var(--paper);opacity:0;transform:scale(.6);transition:.3s var(--ease);white-space:nowrap}
+.cur span{display:block;max-width:76px;font:700 10px/1.25 var(--sans);letter-spacing:1.4px;text-align:center;color:var(--paper);opacity:0;transform:scale(.6);transition:.3s var(--ease);white-space:pre-line;overflow-wrap:normal}
 .cur.link{width:58px;height:58px;margin:-29px;border-color:transparent;background:rgba(227,162,26,.28)}
 .cur.view{width:104px;height:104px;margin:-52px;background:var(--dark);border-color:var(--dark)}
 .cur.view span{opacity:1;transform:none}
