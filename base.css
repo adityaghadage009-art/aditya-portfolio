@@ -261,3 +261,7 @@ body.shlock{overflow:hidden}
 .nav .pill a.tab:not(.on):hover{color:#000}
 .nav .pill .face{cursor:pointer}
 @media (max-width:900px){.nav .links{gap:2px}}
+/* mascot: a touch bigger, peeking just past the bar's edges */
+.nav .pill .face{top:calc(-12*var(--u));height:calc(76*var(--u));width:calc(112*var(--u));z-index:3}
+.nav .pill .face img{height:calc(76*var(--u));min-height:52px;filter:drop-shadow(0 calc(3*var(--u)) calc(4*var(--u)) rgba(40,30,20,.18))}
+@media (max-width:900px){.nav .pill .face{top:-9px;height:64px}.nav .pill .face img{height:64px;min-height:0}}
