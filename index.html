@@ -94,7 +94,7 @@
   transform:rotate(calc(var(--r) + var(--sw,0deg))) translateY(var(--lift,0px));will-change:transform}
 .pcard .paper{position:relative;background:#f2e7d4;border-radius:calc(4*var(--u));padding:calc(15*var(--u)) calc(23*var(--u)) calc(16*var(--u));
   box-shadow:0 calc(4*var(--u)) calc(6*var(--u)) rgba(30,20,10,.22),0 calc(1*var(--u)) 0 rgba(30,20,10,.08);transition:box-shadow .6s var(--ease)}
-.pcard .paper::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+.pcard .paper::after{content:"";position:absolute;inset:0;border-radius:inherit;
   background:linear-gradient(115deg,rgba(255,255,255,.0) 40%,rgba(255,255,255,.22) 50%,rgba(255,255,255,0) 60%) no-repeat;background-size:250% 100%;background-position:120% 0;
   transition:background-position 1.1s var(--ease)}
 .pcard:hover .paper::after{background-position:-20% 0}
@@ -122,12 +122,14 @@
 .studio .lede{position:absolute;left:0;right:0;top:calc(158*var(--u));margin:auto;width:calc(680*var(--u));text-align:center;
   font:400 calc(20*var(--u))/calc(30*var(--u)) var(--sans);color:var(--text-2);opacity:0;transform:translateY(14px);transition:opacity 1s var(--ease) .35s,transform 1s var(--ease) .35s}
 .studio.in .lede{opacity:1;transform:none}
-.ticker{position:absolute;left:0;right:0;top:calc(268*var(--u));height:calc(485*var(--u));touch-action:pan-y;user-select:none;pointer-events:none;
+.ticker{position:absolute;left:0;right:0;top:calc(268*var(--u));height:calc(485*var(--u));touch-action:pan-y;user-select:none;
   opacity:0;transition:opacity 1.2s var(--ease) .5s}
 .studio.in .ticker{opacity:1}
+.tk:hover{transform:translateY(calc(-6*var(--u)))}.ticker.drag .tk{transform:none}
+.tk:focus-visible{outline:2px solid var(--mustard);outline-offset:4px}
 .ticker.drag{cursor:grabbing}
 .track{display:flex;gap:calc(24*var(--u));height:100%;width:max-content;will-change:transform}
-.tk{position:relative;height:100%;flex:none;background:#fff;padding:calc(7*var(--u));border-radius:calc(3*var(--u));
+.tk{position:relative;display:block;height:100%;flex:none;cursor:pointer;background:#fff;padding:calc(7*var(--u));border-radius:calc(3*var(--u));
   box-shadow:0 1px 0 rgba(30,20,10,.06),0 calc(10*var(--u)) calc(24*var(--u)) calc(-14*var(--u)) rgba(30,20,10,.28);
   transition:transform .8s var(--ease),box-shadow .8s var(--ease)}
 .tk img{display:block;height:100%;width:auto;border-radius:calc(2*var(--u));pointer-events:none}
@@ -249,6 +251,9 @@ body.wlock{overflow:hidden}
   opacity:0;transform:translateY(12px);transition:opacity 1s var(--ease) .3s,transform 1s var(--ease) .3s}
 .life.in .lede{opacity:1;transform:none}
 .life .booth{position:absolute;left:calc((100% - 1728*var(--u))/2);width:calc(1728*var(--u));top:0;height:calc(1109*var(--u))}
+.life .go{position:absolute;left:0;right:0;top:calc(300*var(--u));display:flex;justify-content:center;z-index:3;opacity:0;transform:translateY(12px);transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
+.life.in .go{opacity:1;transform:none}
+.life .go .btn .ic{display:inline-block;transition:transform .5s var(--ease)}.life .go .btn:hover .ic{transform:translate(2px,-2px)}
 .life .bscene{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 1.2s var(--ease) .2s}
 .life.in .bscene{opacity:1}
 
@@ -307,7 +312,8 @@ body.wlock{overflow:hidden}
   .nine .scroller{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.nine .scroller::-webkit-scrollbar{display:none}
   .nine .stage{position:relative;left:auto;top:auto;transform:none;width:1050px;height:600px}
   #nineSvg,.nine .nl{position:absolute;inset:auto;left:0;top:10px;width:1050px;height:568px}
-  .studio .go .btn{height:48px;padding:0 22px;border-radius:8px;font-size:15px}
+  .studio .go .btn,.life .go .btn{height:48px;padding:0 22px;border-radius:8px;font-size:15px}
+  .life .go{position:static;margin-top:22px}
   .life .booth{position:relative;left:auto;top:auto;width:200vw;height:auto;aspect-ratio:1728/1109;margin-top:10px}
   .life{overflow:hidden}
   @media (min-width:600px){#cards{grid-template-columns:1fr 1fr;column-gap:28px;padding:56px 22px 40px}.pcard{--u:calc((100vw - 120px) / 2 / 479)}
@@ -463,6 +469,7 @@ body.wlock{overflow:hidden}
   <section class="life" id="life">
     <h2><span class="w" style="--i:0"><span>Life</span></span> <span class="w" style="--i:1"><span>Outside</span></span> <span class="w" style="--i:2"><span>Figma</span></span></h2>
     <p class="lede">When I’m not designing, I’m travelling, taking photos or writing about what I noticed along the way.</p>
+    <div class="go"><a class="btn btn-primary" href="https://www.instagram.com/_adiiiiityaa" target="_blank" rel="noopener">Follow along on Instagram <span class="ic">↗</span></a></div>
     <div class="booth"><div class="bscene" data-scene="scenes/life.html" aria-hidden="true"></div></div>
   </section>
 
@@ -615,17 +622,23 @@ const WORK = [['arqen','Arqen Designs'],['sol','SOL'],['tapestry','Indian Tribal
   ['girvan','Girvan'],['dark','Dark'],['mishwar','Mishwar'],['walking-dead','The Walking Dead'],['aecon','Aecon'],['galimatias','El Galimatías']];
 const tick = $('#ticker'), track = $('#track');
 const POSTER = /tapestry|lost|dark|walking/;
-const set = WORK.map(([f, n]) => `<figure class="tk"><img src="assets/arqen/${f}.webp" alt="${n}" draggable="false" style="aspect-ratio:${POSTER.test(f) ? '405/483' : '1'}"><figcaption>${n}</figcaption></figure>`).join('');
-track.innerHTML = set + set + set;
+/* each frame opens its project on Instagram; until a post link is added, it opens the Arqen profile */
+const POSTS = { arqen: '', sol: '', tapestry: '', justwings: '', 'lost-in-space': '', girvan: '', dark: '', mishwar: '', 'walking-dead': '', aecon: '', galimatias: '' };
+const set = WORK.map(([f, n]) => `<a class="tk" href="${POSTS[f] || ARQEN_IG}" target="_blank" rel="noopener" data-cursor="view" data-label="VIEW ON INSTAGRAM" aria-label="${n} on Instagram"><img src="assets/arqen/${f}.webp" alt="${n}" draggable="false" style="aspect-ratio:${POSTER.test(f) ? '405/483' : '1'}"><figcaption>${n}</figcaption></a>`).join('');
+track.innerHTML = set + set + set; bindCursor(track);
+track.addEventListener('mouseover', () => kT = .15); track.addEventListener('mouseleave', () => kT = 1);
+/* a drag should never count as a click */
+track.addEventListener('click', e => { if (moved > 6) { e.preventDefault(); moved = 0; } }, true);
 let setW = 0, x = 0, v = 0, k = 1, kT = 1, dragging = false, moved = 0, lx = 0, lt = 0, last = performance.now(), sy = scrollY, boost = 0, visible = false;
 const measure = () => { setW = track.scrollWidth / 3; };
 addEventListener('load', measure); addEventListener('resize', measure); measure();
 track.querySelectorAll('img').forEach(i => i.addEventListener('load', measure));
 const BASE = -.045;                                         // px per ms, a calm drift
-tick.addEventListener('pointerdown', e => { dragging = true; moved = 0; lx = e.clientX; lt = e.timeStamp; tick.setPointerCapture(e.pointerId); tick.classList.add('drag'); });
+tick.addEventListener('pointerdown', e => { if (e.button) return; dragging = true; moved = 0; lx = e.clientX; lt = e.timeStamp; tick._pid = e.pointerId; });
 tick.addEventListener('pointermove', e => {
   if (!dragging) return; const dx = e.clientX - lx, dt = Math.max(1, e.timeStamp - lt);
   x += dx; moved += Math.abs(dx); v = v * .4 + (dx / dt) * .6; lx = e.clientX; lt = e.timeStamp;
+  if (moved > 6 && !tick.classList.contains('drag')) { tick.classList.add('drag'); try { tick.setPointerCapture(tick._pid); } catch (_) {} }
 });
 const end = () => { dragging = false; tick.classList.remove('drag'); v = Math.max(-3, Math.min(3, v)); };
 tick.addEventListener('pointerup', end); tick.addEventListener('pointercancel', end);

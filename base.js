@@ -86,7 +86,7 @@ window.bindCursor = (root = document) => $$('a,button,[data-cursor]', root).forE
   el.addEventListener('mouseenter', () => {
     const k = el.dataset.cursor || (el.closest('.card') ? 'view' : 'link');
     cur.dataset.k = k; cur.classList.add(k === 'view' ? 'view' : 'link');
-    if (el.dataset.label) cur.querySelector('span').textContent = el.dataset.label.replace(/<br\s*\/?>/gi, '\n').replace(/^VIEW CASE STUDY$/, 'VIEW\nCASE STUDY').replace(/^COMING SOON$/, 'COMING\nSOON'); else cur.querySelector('span').textContent = 'VIEW';
+    if (el.dataset.label) cur.querySelector('span').textContent = el.dataset.label.replace(/<br\s*\/?>/gi, '\n').replace(/^VIEW CASE STUDY$/, 'VIEW\nCASE STUDY').replace(/^COMING SOON$/, 'COMING\nSOON').replace(/^VIEW ON INSTAGRAM$/, 'VIEW ON\nINSTAGRAM'); else cur.querySelector('span').textContent = 'VIEW';
     dot.classList.toggle('hide', k === 'view');
   });
   el.addEventListener('mouseleave', () => { cur.classList.remove('view', 'link'); dot.classList.remove('hide'); });
