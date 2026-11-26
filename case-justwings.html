@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Just Wings — Brand Identity — Aditya Ghadage</title>
+<meta name="description" content="Just Wings — Brand Identity, a case study by Aditya Ghadage.">
+<link rel="icon" href="assets/face.svg">
+<link rel="preload" as="image" href="assets/case-justwings/s00.webp">
+<link rel="stylesheet" href="base.css">
+<style>
+:root{--page:#000000;--fg:#f4f1ea;--acc:#ec7a2c;--gut:clamp(60px,5vw,96px)}
+html,body{background:var(--page)}
+.case{position:relative;z-index:1;background:var(--page);padding:0 var(--gut)}
+.doc{position:relative;max-width:2000px;margin:0 auto}
+.doc img{display:block;width:100%;height:auto;opacity:0;transition:opacity .9s var(--ease)}
+.doc img.ok{opacity:1}
+.doc .ov{position:absolute;object-fit:cover;background:transparent;pointer-events:none}
+/* back: a quiet circle in the left margin; the label slides out on hover */
+.back{position:fixed;left:calc((var(--gut) - 46px)/2);top:22px;z-index:55;display:flex;align-items:center;height:46px;min-width:46px;border-radius:999px;overflow:hidden;
+  background:color-mix(in srgb,var(--fg) 10%,var(--page));color:var(--fg);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 18%,transparent);
+  font:600 14px/1 var(--sans);white-space:nowrap;transition:background .35s var(--ease),box-shadow .35s var(--ease),transform .4s var(--spring)}
+.back svg{flex:none;width:46px;height:20px;transition:transform .4s var(--ease)}
+.back span{max-width:0;opacity:0;transition:max-width .5s var(--ease),opacity .3s var(--ease),padding .5s var(--ease)}
+.back:hover,.back:focus-visible{background:var(--fg);color:var(--page)}
+.back:hover span,.back:focus-visible span{max-width:90px;opacity:1;padding-right:18px}
+.back:hover svg{transform:translateX(-2px)}
+.back:active{transform:scale(.95)}
+.back:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:900px){:root{--gut:0px}.back{left:12px;top:12px;background:color-mix(in srgb,var(--page) 80%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}}
+@media (prefers-reduced-motion:reduce){.doc img{transition:none;opacity:1}}
+</style>
+</head>
+<body data-nofooter>
+<canvas id="dots" aria-hidden="true" style="display:none"></canvas>
+<div class="curtain"></div>
+<div class="cur"><span>VIEW</span></div><div class="cur-dot"></div>
+<a class="back" href="work.html" data-go aria-label="Back to all work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg><span>All work</span></a>
+<main class="page case">
+  <h1 class="sr">Just Wings — Brand Identity</h1>
+  <div class="doc" id="doc"><img src="assets/case-justwings/s00.webp" width="2334" height="1600" alt="" decoding="async"><img src="assets/case-justwings/s01.webp" width="2334" height="1600" alt="" decoding="async"><img src="assets/case-justwings/s02.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s03.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s04.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s05.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s06.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s07.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s08.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s09.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s10.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s11.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s12.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s13.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s14.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s15.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s16.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s17.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s18.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s19.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s20.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s21.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s22.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s23.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s24.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s25.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s26.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s27.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s28.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s29.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s30.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-justwings/s31.webp" width="2334" height="1042" alt="" loading="lazy" decoding="async"></div>
+  <div class="sr"><p>JUSTWINGS A vibrant, Gen Z-focused fast food brand that turns cravings into experiences with bold flavors and modern vibes.</p><p>JUSTWINGS</p><p>POPCORN</p><p>NUGGETS</p><p>WAFFLES</p><p>BARBEQUE</p><p>CHEESE</p><p>JUSTWINGS CRISPY</p><p>CHEESY</p><p>SALTY</p><p>UMAMI</p><p>SAVORY</p><p>lient’s Ask</p><p>To create a bold, minimalist brand identity that resonates with Gen Z&#x27;s energy and love for flavorful, convenient food experiences, while establishing Just Wings as the ultimate destination for chicken wing lovers.</p><p>Brand Story Just Wings was founded by a squad of food lovers in Australia, driven by a passion for creating the perfect chicken wing experience. With a menu packed with drool-worthy sauces and sides, we blend taste, vibes, and convenience into every meal. Whether dining in or taking out, Just Wings ensures every foodie flies high on flavor.</p><p>Vision</p><p>Mission</p><p>To elevate the fast food experience, making every bite an adventure in flavor and fun.</p><p>Serve bold, saucy, and unforgettable chicken wings that cater to Gen Z’s vibrant lifestyle.</p><p>YUMMM!</p><p>s arch and Brand Positioning</p><p>Re e</p><p>Just Wings isn’t just another fast food joint-it’s where bold flavors meet a fun, minimalist vibe. With the best wings in the game, we’re all about keeping it real, no gimmicks. Designed for the Gen Z, our vibrant menu and striking brand identity make every bite unforgettable.</p><p>Bold Aesthetics</p><p>Minimalism</p><p>Vibrant Menu</p><p>Tech-Savvy</p><p>xperiential</p><p>rave-Worthy</p><p>WINGS</p><p>UN: LET’S WING IT!</p><p>G BREAKDOWN</p><p>LO O</p><p>bstract mark:</p><p>Word</p><p>sed black and white backgrounds effectively for contrast, ensuring better readability and strong brand recognition.</p><p>The wing emblem symbolizes speed, motion, and chicken wings, reflecting the brand&#x27;s focus on fast service and chicken-based cuisine. B</p><p>mark:</p><p>ackground:</p><p>Typography:</p><p>hose Vivid Tangelo for the emblem to create a funky, modern vibe.</p><p>sed a bold, sans-serif font for &quot;JUST WINGS&quot; to ensure strong readability.</p><p>WINGS</p><p>The joy of riding on flavors</p><p>AVOURS</p><p>Bold: No gimmicks, just flavor</p><p>T S U J S G N I W</p><p>WINGS</p><p>Hex</p><p>RGB</p><p>CMYK</p><p>#E77124</p><p>231, 113, 36</p><p>0, 51, 84, 9</p><p>Vivid Tangelo</p><p>Impact</p><p>WINGS</p><p>ivid Tangelo, a bold orange, radiates energy, warmth, and youthful vibrancy, reflecting the brand&#x27;s bold appeal. V</p><p>The Impact font conveys boldness and simplicity, perfectly aligning with the brand’s minimalist identity. Its strong and unmistakable design reflects the confident essence of brand.</p><p>Taste that takes flight</p><p>WINGS JUSTWINGS JUSTWI</p><p>ur bold, simple design speaks to Gen Z, with Instagram-worthy elements ensuring soaring visibility and engagement. O</p><p>Big thanks to Team Rabbixel and our incredible creative directors, Nisha Droch and Bhavya Taneja, for bringing bold energy to this project. Together, we’ve crafted a flavorful identity that makes Just Wings truly soar!</p></div>
+</main>
+<script src="base.js"></script>
+<script>
+(() => {
+const doc = document.getElementById('doc');
+doc.querySelectorAll('img').forEach(im => { const ok = () => im.classList.add('ok'); im.complete && im.naturalWidth ? ok() : im.addEventListener('load', ok); });
+/* motion clips start when they come into view and rest when they leave */
+/* clips start loading well before they scroll into view, and only play while on screen */
+const near = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting && v.dataset.src) { v.preload = 'auto'; v.src = v.dataset.src; v.removeAttribute('data-src'); } }), { rootMargin: '1600px 0px' });
+const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { if (v.dataset.src) { v.src = v.dataset.src; v.removeAttribute('data-src'); } v.play().catch(() => {}); } else v.pause(); }), { threshold: 0 });
+doc.querySelectorAll('.ov').forEach(v => near.observe(v));
+doc.querySelectorAll('.ov').forEach(v => vio.observe(v));
+addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelector('.back').click(); });
+})();
+</script>
+</body>
+</html>

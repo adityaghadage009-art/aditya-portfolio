@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The research wall</title>
+<style>
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+
+svg{width:100%;height:100%;display:block}
+text{font-family:"Arial Black","Helvetica Neue",Arial,sans-serif;font-weight:900}
+</style></head><body>
+<svg id="s" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <pattern id="cork" width="36" height="36" patternUnits="userSpaceOnUse">
+    <rect width="36" height="36" fill="#e2cfa6"/><circle cx="7" cy="9" r="2.2" fill="#c9b282"/><circle cx="25" cy="22" r="2.6" fill="#c9b282"/><circle cx="16" cy="31" r="1.6" fill="#d4bf93"/><circle cx="31" cy="5" r="1.6" fill="#d4bf93"/>
+  </pattern>
+  <clipPath id="boardClip"><rect x="70" y="70" width="860" height="860"/></clipPath>
+</defs>
+
+<g id="cam">
+  <!-- the board -->
+  <rect x="48" y="48" width="904" height="904" rx="10" fill="#6f6b34" stroke="#1d1714" stroke-width="10"/>
+  <rect x="70" y="70" width="860" height="860" fill="url(#cork)" stroke="#1d1714" stroke-width="7"/>
+  <g clip-path="url(#boardClip)">
+    <g id="shadows" fill="#1d1714" opacity="0.18"></g>
+    <g id="cards"></g>
+    <g id="strings" fill="none" stroke="#e3a21a" stroke-width="7" stroke-linecap="round"></g>
+    <g id="pins"></g>
+    <g id="center"></g>
+    <g id="burst" stroke="#e3a21a" stroke-width="10" stroke-linecap="round"></g>
+    <g id="stamp"></g>
+  </g>
+</g>
+</svg>
+<script>
+{
+const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
+const mk=(tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const set=(e,a)=>{for(const k in a)e.setAttribute(k,a[k]);};
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), seg=(t,a,b)=>cl((t-a)/(b-a));
+const io=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, out=x=>1-Math.pow(1-x,3), inn=x=>x*x*x;
+const back=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const spring=(x,f=3.2,d=5.5)=>x<=0?0:1-Math.exp(-d*x)*Math.cos(f*Math.PI*x);
+const lerp=(a,b,x)=>a+(b-a)*x;
+const reg=(cx,cy,r,n=8,rot=Math.PI/8)=>Array.from({length:n},(_,i)=>[cx+r*Math.cos(rot+i*2*Math.PI/n),cy+r*Math.sin(rot+i*2*Math.PI/n)]);
+const P=pts=>pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+const INK='#1d1714',CREAM='#fff8ec',MUS='#e3a21a',OLI='#6f6b34',BRN='#2a211c';
+const LOOP=10.6;
+// ---------- evidence cards (built at origin, placed by transform)
+function card(w,h,fill=CREAM){const g=mk('g',{},$('cards'));const sh=mk('rect',{x:-w/2+8,y:-h/2+10,width:w,height:h,rx:6},$('shadows'));
+  mk('rect',{x:-w/2,y:-h/2,width:w,height:h,rx:6,fill,stroke:INK,'stroke-width':6},g);return {g,sh,w,h};}
+const T=(p,x,y,txt,size,fill=INK,anchor='start')=>{const e=mk('text',{x,y,'font-size':size,fill,'text-anchor':anchor},p);e.textContent=txt;return e;};
+// 1 · the quote — someone who gave up halfway
+const cQ=card(270,170);mk('text',{x:-112,y:-22,'font-size':70,fill:MUS},cQ.g).textContent='“';
+T(cQ.g,-112,8,'I gave up',30);T(cQ.g,-112,46,'halfway.',30);
+const qBar=mk('rect',{x:-112,y:62,height:8,rx:3,fill:OLI},cQ.g);
+T(cQ.g,112,-50,'INTERVIEW',14,OLI,'end');
+// 2 · the support ticket
+const cS=card(270,170);
+for(let i=0;i<9;i++)mk('circle',{cx:-112+i*28,cy:-85,r:6,fill:'#e2cfa6',stroke:INK,'stroke-width':4},cS.g);
+const phoneG=mk('g',{transform:'translate(-80 -10)'},cS.g);
+mk('path',{d:'M-34 10 Q-34 -10 -16 -10 L16 -10 Q34 -10 34 10 L34 16 L16 16 L16 8 L-16 8 L-16 16 L-34 16Z',fill:BRN,stroke:INK,'stroke-width':4},phoneG);
+mk('path',{d:'M-28 22 L28 22 L22 40 L-22 40Z',fill:OLI,stroke:INK,'stroke-width':4},phoneG);
+T(cS.g,-30,-8,'“What’s',24);T(cS.g,-30,24,'Ref. ID?”',24);
+T(cS.g,112,62,'SUPPORT #482',14,OLI,'end');
+// 3 · the session recording
+const cR=card(270,190,BRN);
+mk('rect',{x:-115,y:-75,width:230,height:120,rx:4,fill:CREAM},cR.g);
+mk('rect',{x:-95,y:-58,width:90,height:10,rx:3,fill:OLI},cR.g);
+mk('rect',{x:-95,y:-38,width:190,height:24,rx:4,fill:'#fff',stroke:INK,'stroke-width':3},cR.g);
+mk('rect',{x:-95,y:-4,width:60,height:10,rx:3,fill:OLI},cR.g);
+const recField=mk('rect',{x:-95,y:14,width:190,height:24,rx:4,fill:'#fff',stroke:INK,'stroke-width':3},cR.g);
+const recCur=mk('path',{d:'M0 0 L0 22 L6 17 L10 26 L14 24 L10 15 L17 15Z',fill:BRN,stroke:CREAM,'stroke-width':2},cR.g);
+const recDot=mk('circle',{cx:98,cy:66,r:8,fill:'#d9534f'},cR.g);
+T(cR.g,-112,73,'REC · 03:42',16,CREAM);
+// 4 · the drop-off chart
+const cC=card(270,190);
+const bars=[1,0.96,0.92,0.88,0.5,0.47,0.45].map((h,i)=>mk('rect',{x:-110+i*31,width:22,rx:3,fill:i<4?OLI:MUS},cC.g));
+mk('line',{x1:-115,y1:50,x2:115,y2:50,stroke:INK,'stroke-width':4},cC.g);
+T(cC.g,-112,80,'FORM DROP-OFF',15,OLI);
+const dropTag=mk('g',{},cC.g);mk('rect',{x:20,y:-86,width:94,height:34,rx:8,fill:MUS,stroke:INK,'stroke-width':4},dropTag);T(dropTag,67,-62,'−50%',20,INK,'middle');
+const CARDS=[
+ {c:cQ,x:245,y:235,r:-6,t0:0.45,from:[-260,-200]},
+ {c:cS,x:760,y:225,r:5,t0:0.9,from:[1260,-220]},
+ {c:cR,x:240,y:760,r:4,t0:1.35,from:[-260,1220]},
+ {c:cC,x:765,y:765,r:-5,t0:1.8,from:[1260,1230]}];
+CARDS.forEach(k=>{k.pin=[k.x-10,k.y-k.c.h/2+20];});
+// pins (round heads, his palette)
+function pin(color){const g=mk('g',{},$('pins'));mk('ellipse',{cx:6,cy:10,rx:15,ry:9,fill:INK,opacity:0.25},g);mk('circle',{r:16,fill:color,stroke:INK,'stroke-width':5},g);mk('circle',{cx:-5,cy:-5,r:4,fill:CREAM},g);return g;}
+CARDS.forEach((k,i)=>{k.pg=pin(i%2?OLI:MUS);});
+// strings
+CARDS.forEach(k=>{k.str=mk('path',{},$('strings'));});
+// centre card: face-down "?" → flips to the real problem
+const CX=500,CY=505;
+const cen=mk('g',{},$('center')), cenSh=mk('rect',{x:-150+8,y:-110+10,width:300,height:220,rx:8},$('shadows'));
+const cenFlip=mk('g',{},cen);
+const back_=mk('g',{},cenFlip);mk('rect',{x:-150,y:-110,width:300,height:220,rx:8,fill:OLI,stroke:INK,'stroke-width':7},back_);
+mk('polygon',{points:P(reg(0,0,58)),fill:MUS,stroke:INK,'stroke-width':6},back_);T(back_,0,24,'?',70,INK,'middle');
+const front=mk('g',{},cenFlip);mk('rect',{x:-150,y:-110,width:300,height:220,rx:8,fill:CREAM,stroke:INK,'stroke-width':7},front);
+T(front,0,-62,'THE REAL PROBLEM',20,OLI,'middle');
+const lblOld=T(front,-112,-14,'Ref. ID',30,INK);
+const strike=mk('line',{x1:-116,y1:-24,x2:-4,y2:-24,stroke:'#d9534f','stroke-width':6,'stroke-linecap':'round'},front);
+const lblNew=T(front,-112,-14,'Order number',30,INK);
+mk('rect',{x:-112,y:4,width:224,height:40,rx:6,fill:'#fff',stroke:INK,'stroke-width':5},front);
+const typed=mk('rect',{x:-100,y:18,height:12,rx:3,fill:BRN},front);
+const circ=mk('ellipse',{cx:-56,cy:-25,rx:74,ry:30,fill:'none',stroke:MUS,'stroke-width':7,'stroke-linecap':'round'},front);
+T(front,0,82,'one unclear label',18,OLI,'middle');
+const cenPin=pin('#d9534f');
+// stamp
+const stampG=mk('g',{},$('stamp'));mk('rect',{x:-150,y:-46,width:300,height:92,rx:14,fill:'none',stroke:'#d9534f','stroke-width':10},stampG);
+T(stampG,0,22,'SOLVED',62,'#d9534f','middle');
+const burst=[...Array(12)].map((_,i)=>({a:i*Math.PI/6,l:mk('line',{},$('burst'))}));
+// ---------- frame
+function cardPose(k,t){ // fly in, slam (squash), settle; leave at the end
+  const fly=seg(t,k.t0,k.t0+0.42);
+  const land=t-(k.t0+0.42);
+  const leave=io(seg(t,9.25+CARDS.indexOf(k)*0.08,9.85+CARDS.indexOf(k)*0.08));
+  let x=lerp(k.from[0],k.x,out(fly)), y=lerp(k.from[1],k.y,out(fly));
+  let r=lerp(k.r*6,k.r,out(fly)), s=lerp(1.25,1,out(fly));
+  let sq=land>0?1-0.07*Math.exp(-9*land)*Math.cos(18*land):1;
+  y+=leave*820; r+=leave*k.r*5;
+  return {x,y,r,s,sq,vis:fly>0&&leave<1,lift:1-out(fly)};
+}
+function render(t){
+  t=((t%LOOP)+LOOP)%LOOP;
+  // gentle camera: settles in, pushes toward the centre when the case cracks
+  const push=io(seg(t,4.9,6.0))*(1-io(seg(t,8.6,9.6)));
+  const sc=1+0.05*push-0.02*(1-out(seg(t,0,0.6)));
+  set($('cam'),{transform:`translate(500 505) scale(${sc}) translate(-500 -505)`});
+  // cards
+  CARDS.forEach((k,i)=>{const p=cardPose(k,t);
+    set(k.c.g,{transform:`translate(${p.x} ${p.y}) rotate(${p.r}) scale(${p.s*(2-p.sq)} ${p.s*p.sq})`,opacity:p.vis?1:0});
+    set(k.c.sh,{transform:`translate(${p.x+18*p.lift} ${p.y+26*p.lift}) rotate(${p.r})`,opacity:p.vis?1:0});
+    // pin pops in just after the card lands
+    const pp=back(seg(t,k.t0+0.38,k.t0+0.62)), lv=io(seg(t,9.1+i*0.08,9.35+i*0.08));
+    const pinX=p.x+(k.pin[0]-k.x), pinY=p.y+(k.pin[1]-k.y);
+    set(k.pg,{transform:`translate(${pinX} ${pinY-30*(1-pp)}) scale(${pp*(1-lv)})`,opacity:pp>0&&lv<1?1:0});
+    k.pinNow=[pinX,pinY];
+  });
+  // micro-stories inside each card
+  set(qBar,{width:180*out(seg(t,0.9,1.6))});
+  const ring=t>1.3&&t<5.2;set(phoneG,{transform:`translate(-80 -10) rotate(${ring?Math.sin(t*40)*7:0})`});
+  const cu=(t*1.4)%1, cxr=lerp(-60,60,0.5+0.5*Math.cos(cu*2*Math.PI))*0.9, cyr=26+Math.sin(cu*2*Math.PI)*10;   // cursor circling the confusing field
+  set(recCur,{transform:`translate(${cxr} ${cyr})`}); set(recDot,{opacity:Math.floor(t*2)%2?1:0.25});
+  set(recField,{stroke:Math.floor(t*3)%2?MUS:INK,'stroke-width':Math.floor(t*3)%2?5:3});
+  bars.forEach((b,i)=>{const h=[1,0.96,0.92,0.88,0.5,0.47,0.45][i]*110*out(seg(t,2.2+i*0.06,2.6+i*0.06));set(b,{y:50-h,height:h});});
+  set(dropTag,{opacity:out(seg(t,2.7,2.9)),transform:`translate(0 ${-10*(1-back(seg(t,2.7,2.95)))})`});
+  // centre card drops in face-down
+  const cIn=seg(t,2.35,2.8), cLand=t-2.8, cLeave=io(seg(t,9.5,10.1));
+  const cy_=lerp(-200,CY,out(cIn))+cLeave*900, cr=lerp(25,0,out(cIn))+cLeave*12;
+  const csq=cLand>0?1-0.06*Math.exp(-9*cLand)*Math.cos(18*cLand):1;
+  // the flip
+  const fl=seg(t,5.55,6.05), fx=Math.cos(Math.PI*io(fl));
+  const tension=t>4.9&&t<5.55?Math.sin(t*70)*2.2*seg(t,4.9,5.4):0;
+  set(cen,{transform:`translate(${CX+tension} ${cy_}) rotate(${cr}) scale(${(2-csq)*(1+0.08*Math.sin(Math.PI*fl))} ${csq*(1+0.08*Math.sin(Math.PI*fl))})`,opacity:cIn>0&&cLeave<1?1:0});
+  set(cenSh,{transform:`translate(${CX} ${cy_}) rotate(${cr}) scale(${Math.max(0.02,Math.abs(fx))} 1)`,opacity:cIn>0&&cLeave<1?1:0});
+  set(cenFlip,{transform:`scale(${Math.max(0.02,Math.abs(fx))} 1)`});
+  set(back_,{opacity:fl<0.5?1:0}); set(front,{opacity:fl>=0.5?1:0});
+  const cp=back(seg(t,2.75,2.98)), cpl=io(seg(t,9.3,9.5));
+  set(cenPin,{transform:`translate(${CX+tension} ${cy_-86}) scale(${cp*(1-cpl)})`,opacity:cp>0&&cpl<1?1:0});
+  // strings: shoot from each card's pin to the centre pin, then pull taut
+  CARDS.forEach((k,i)=>{const s0=3.0+i*0.42, d=out(seg(t,s0,s0+0.4)), taut=spring(seg(t,s0+0.4,s0+1.3),2,5), slack=io(seg(t,8.9,9.3));
+    const a=k.pinNow, b=[CX+tension,cy_-86];
+    const sag=lerp(110,10,cl(taut,0,1.15))+slack*120;
+    const mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2+sag;
+    const e=[lerp(a[0],b[0],d),lerp(a[1],b[1],d)], c=[lerp(a[0],mx,d),lerp(a[1],my,d)];
+    const glow=t>5.0&&t<5.6?1:0;
+    set(k.str,{d:d>0?`M${a[0].toFixed(1)} ${a[1].toFixed(1)} Q${c[0].toFixed(1)} ${c[1].toFixed(1)} ${e[0].toFixed(1)} ${e[1].toFixed(1)}`:'',
+      opacity:d>0?1-io(seg(t,9.2,9.45)):0,'stroke-width':7+glow*3*(0.5+0.5*Math.sin(t*30))});});
+  // the reveal: circle the bad label, strike it, write the clear one
+  const ci=seg(t,6.3,6.8); set(circ,{'stroke-dasharray':480,'stroke-dashoffset':480*(1-out(ci)),opacity:ci>0?1-io(seg(t,7.4,7.7)):0});
+  const st=seg(t,6.9,7.15); set(strike,{x2:lerp(-116,-4,out(st)),opacity:st>0&&t<7.5?1:0});
+  const sw=io(seg(t,7.35,7.65)); set(lblOld,{opacity:1-sw,transform:`translate(0 ${-14*sw})`}); set(lblNew,{opacity:sw,transform:`translate(0 ${14*(1-sw)})`});
+  set(typed,{width:150*out(seg(t,7.7,8.2))});
+  // burst + stamp
+  const b=seg(t,6.0,6.45);
+  burst.forEach(o=>{const r0=lerp(170,290,out(b)),r1=r0+lerp(46,0,b);set(o.l,{x1:CX+Math.cos(o.a)*r0,y1:CY+Math.sin(o.a)*r0*0.8,x2:CX+Math.cos(o.a)*r1,y2:CY+Math.sin(o.a)*r1*0.8,opacity:b>0&&b<1?1:0});});
+  const sp=seg(t,8.2,8.45), sOut=io(seg(t,9.2,9.5));
+  set(stampG,{transform:`translate(640 650) rotate(-12) scale(${sp>0?lerp(2.6,1,out(sp))*(1+0.04*Math.exp(-8*(t-8.45))*Math.sin(30*(t-8.45))*(t>8.45?1:0)):0})`,opacity:sp>0?(1-sOut)*(sp<0.2?sp*5:1):0});
+}
+window.__render=render; window.__ready=true;
+if(!location.search.includes('capture')){const t0=performance.now();(function loop(n){render((n-t0)/1000);requestAnimationFrame(loop);})(t0);}
+}
+</script></body></html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selected Work — Aditya Ghadage</title>
+<meta name="description" content="Selected work by Aditya Ghadage — UX/UI case studies, branding and visual design.">
+<link rel="icon" href="assets/face.svg">
+<link rel="stylesheet" href="base.css">
+<style>
+main{padding:calc(186*var(--u)) calc(68*var(--u)) 0}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;margin-bottom:calc(64*var(--u))}
+h1{font:400 calc(84*var(--u))/1.05 var(--serif);letter-spacing:-.02em}
+h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em}
+h1 .w > span{display:inline-block;transform:translateY(105%);transition:transform 1.1s var(--ease) .35s}
+.ready h1 .w > span{transform:none}
+.filter{position:relative;display:flex;margin-top:calc(21*var(--u));height:calc(44*var(--u));padding:calc(4*var(--u)) calc(6*var(--u));border-radius:calc(8*var(--u));background:#fff;
+  opacity:0;transform:translateY(12px);transition:opacity 1s var(--ease) .55s,transform 1s var(--ease) .55s}
+.ready .filter{opacity:1;transform:none}
+.filter button{position:relative;z-index:2;height:100%;padding:0 calc(42*var(--u));font:500 calc(18*var(--u)) var(--sans);transition:color .4s;white-space:nowrap}
+.filter button .n{font:700 calc(10*var(--u)) var(--mono);color:var(--mute);margin-left:6px;vertical-align:2px;transition:color .4s}
+.filter button.on{color:#fff}.filter button.on .n{color:var(--mustard)}
+.filter .hl{position:absolute;z-index:1;top:calc(4*var(--u));left:0;height:calc(36*var(--u));border-radius:calc(6*var(--u));background:var(--dark);transition:transform .6s var(--ease),width .6s var(--ease)}
+.grid{display:grid;grid-template-columns:743fr 828fr;column-gap:calc(18*var(--u));row-gap:calc(48*var(--u))}
+.card{display:block}
+.card.out{display:none}
+.frame{position:relative;aspect-ratio:743/500;border-radius:calc(10*var(--u));overflow:hidden;background:#d9d2c6;isolation:isolate;
+  transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.card:nth-child(even) .frame{aspect-ratio:828/500}
+.card:hover .frame{box-shadow:0 30px 60px -30px rgba(29,23,20,.45)}
+.frame video,.frame .ph,.frame .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .6s var(--ease)}
+.frame video{opacity:0}.frame video.on{opacity:1}
+.frame .poster.anim{opacity:0}.frame .poster.anim.on{opacity:1}
+.card:hover .frame video,.card:hover .frame .poster{transform:scale(1.035)}
+.frame .ph{display:grid;place-items:center;background:var(--paper);background-image:radial-gradient(circle,#ddd6ca .9px,transparent 1.3px);background-size:14px 14px}
+.frame .ph span{font:400 calc(40*var(--u))/1 var(--serif);color:var(--ink2)}
+.frame .ph small{position:absolute;bottom:18px;font:700 10px var(--mono);letter-spacing:3px;color:var(--mute)}
+.frame .glare{position:absolute;inset:0;pointer-events:none;background:radial-gradient(600px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.16),transparent 40%);opacity:0;transition:opacity .5s;mix-blend-mode:soft-light}
+.card:hover .glare{opacity:1}
+.title{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:calc(16*var(--u))}
+.title h3{font:400 calc(26*var(--u))/1.25 var(--serif)}
+.title h3 .ar{display:inline-block;font-family:var(--sans);margin-left:6px;opacity:0;transform:translateX(-8px);transition:.5s var(--ease)}
+.card:hover .title h3 .ar{opacity:1;transform:none}
+.title .cat{font:600 calc(11*var(--u)) var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.tags{display:flex;flex-wrap:wrap;gap:calc(10*var(--u));margin-top:calc(14*var(--u))}
+.tags span{font:500 calc(15*var(--u))/calc(30*var(--u)) var(--sans);padding:0 calc(13*var(--u));border-radius:999px;color:var(--text-2);box-shadow:inset 0 0 0 1px rgba(40,30,20,.18);transition:box-shadow .5s var(--ease),color .5s var(--ease)}
+.card:hover .tags span{color:var(--text);box-shadow:inset 0 0 0 1px rgba(40,30,20,.34)}
+.soon{position:relative;margin:calc(120*var(--u)) calc(-68*var(--u)) 0;padding:calc(90*var(--u)) calc(68*var(--u)) calc(110*var(--u));display:grid;grid-template-columns:calc(560*var(--u)) 1fr;gap:40px;align-items:center}
+.soon h2{font:400 calc(46*var(--u))/calc(56*var(--u)) var(--serif)}
+.soon p{font:400 calc(18*var(--u))/calc(28*var(--u)) var(--sans);color:#2a2522;margin-top:20px;max-width:380px}
+.soon img{width:100%;height:auto}
+.nav{opacity:0;transition:opacity .8s var(--ease) .3s,transform .7s var(--ease)}.ready .nav{opacity:1}
+@media (max-width:900px){main{padding:110px 20px 0}h1{font-size:52px}.grid{grid-template-columns:1fr;row-gap:40px}.card:nth-child(even) .frame{aspect-ratio:743/500}
+ .title h3{font-size:22px}.tags span{font-size:12.5px;line-height:26px}.filter{height:42px}.filter button{padding:0 16px;font-size:14px}.filter .hl{height:34px}
+ .soon{grid-template-columns:1fr;margin:80px -20px 0;padding:60px 20px}.soon h2{font-size:36px;line-height:44px}.soon p{font-size:16px;line-height:25px;margin-top:14px}.soon .btn{height:48px;padding:0 22px;font-size:15px;border-radius:8px;margin-top:24px!important}}
+main.page{position:relative;z-index:1;background:#f4e9dc url(assets/paper-tile.jpg) center top/100% auto repeat-y}
+</style>
+</head>
+<body>
+<canvas id="dots" aria-hidden="true"></canvas>
+<div class="curtain"></div>
+<div class="grain"></div>
+<div class="cur"><span>VIEW</span></div><div class="cur-dot"></div>
+
+<header class="nav">
+  <div class="meta">
+    <div><span class="live"></span>Maharashtra, India</div>
+    <div class="row"><span id="clock">--:--</span><span class="sep"></span><span id="date">--</span></div>
+  </div>
+  <nav class="pill" aria-label="Main">
+    <span class="hl"></span>
+    <a class="tab about" href="index.html">About</a>
+    <a class="face" href="index.html" data-go aria-label="Home"><img src="assets/face.svg" alt="Aditya"></a>
+    <a class="tab work on" href="work.html" aria-current="page">Work</a>
+  </nav>
+  <div class="links">
+    <a href="https://www.linkedin.com/in/aditya-ghadage" target="_blank" rel="noopener">LinkedIn<span class="arr">↗</span></a>
+    <a href="mailto:adityaghadage009@gmail.com">Email<span class="arr">↗</span></a>
+    <a href="assets/Aditya-Ghadage-Resume.pdf" target="_blank" rel="noopener">Resume<span class="arr">↗</span></a>
+  </div>
+</header>
+
+<main class="page">
+  <section class="head">
+    <h1><span class="w"><span>Selected</span></span> <span class="w"><span>Work</span></span></h1>
+    <div class="filter" id="filter">
+      <span class="hl"></span>
+      <button data-f="all" class="on">All<span class="n">10</span></button>
+      <button data-f="ux">UX/UI<span class="n">02</span></button>
+      <button data-f="visual">Visual &amp; branding<span class="n">08</span></button>
+    </div>
+  </section>
+  <section class="grid" id="grid"></section>
+  <section class="soon rv">
+    <div>
+      <h2>New Projects<br>Coming Soon</h2>
+      <p>Something new is on the canvas right now — sketches, second thoughts and a lot of coffee.</p>
+      <a class="btn btn-primary" href="mailto:adityaghadage009@gmail.com" data-hi style="margin-top:30px">Say hello in the meantime <span class="ic">→</span></a>
+    </div>
+    <img src="assets/desk.webp" alt="A desk with a monitor showing a design in progress, a calendar and a dog peeking over the screen" loading="lazy">
+  </section>
+</main>
+<footer class="page">
+  <div class="big">Let's make something<br>people come back to.</div>
+  <div class="small">_ADIIIIITYAA<br>© <span id="yr"></span> · DESIGNED &amp; BUILT WITH CARE</div>
+</footer>
+
+<script>
+const P=[
+ {t:"Creo UX Case Study",c:"ux",v:"creo-ux",h:"case-creo-ux.html",tags:["User Research","Competitor Analysis","Behavioural Design","UX Ideation"]},
+ {t:"Kantara - The Legend Movie Brand Identity",c:"visual",v:"kantara",h:"case-kantara.html",tags:["Campaign Strategy","Visual Storytelling","Cultural Branding","Illustration Design"]},
+ {t:"Creo UI Case Study",c:"ux",v:"creo-ui",h:"case-creo-ui.html",tags:["Interface Design","Interaction Design","Design Systems.","Gamification"]},
+ {t:"District X Arijit Singh Event Branding",c:"visual",v:"district",h:"case-district.html",tags:["Visual Identity Design","Experiential Branding","Event Branding","Creative Direction."]},
+ {t:"Sol Resort - Brand Guidelines Design",c:"visual",v:"sol",h:"case-sol.html",tags:["Brand Identity","Logo design","Hospitality Branding","Brand Strategy"]},
+ {t:"Just Wings Brand Identity",c:"visual",v:"justwings",h:"case-justwings.html",tags:["Food & Beverage Branding","Packaging Design","Food Visual Identity","Creative Direction."]},
+ {t:"Arqen Design Studio Brand Identity Design",c:"visual",v:"arqen",h:"case-arqen.html",tags:["Design Studio","Logo Design","Visual Direction","Brand Strategy"]},
+ {t:"Girvan Resort Brand identity Project",c:"visual",v:"girvan",h:"case-girvan.html",tags:["Resort Branding","Photography","Logo Design","Brand Design Direction"]},
+ {t:"Creo Brand Identity Design",c:"visual",v:"creo-brand",h:"case-creo-brand.html",tags:["Logo design","Reward system design","Gamification","Brand Strategy"]},
+ {t:"El Galimatias",c:"visual",v:"galimatias",h:"case-galimatias.html",tags:["Visual Direction","Logo Design","Motion","Colour And Typography system"]}
+];
+const grid=document.getElementById('grid');
+grid.addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;e.preventDefault();const h=c.getAttribute('href');if(h&&h!=='#'){document.body.classList.add('leaving');setTimeout(()=>location.href=h,650);}});
+grid.innerHTML=P.map((p,i)=>`
+ <a class="card rv" href="${p.h||'#'}" data-c="${p.c}" ${p.h?'data-label="VIEW CASE STUDY"':'data-label="COMING SOON" aria-disabled="true"'}>
+  <div class="frame">
+   ${p.v?`<img class="poster" src="assets/posters/${p.v}.webp" alt="" loading="lazy" decoding="async"><video data-src="assets/${p.v}.mp4" muted loop playsinline preload="none" poster="assets/posters/${p.v}.webp"></video>`:`<div class="ph"><span>${p.t.split(/ - | Brand/)[0]}</span><small>COVER COMING</small></div>`}
+   <div class="glare"></div>
+  </div>
+  <div class="title"><h3>${p.t}<span class="ar">↗</span></h3><span class="cat">${p.c==='ux'?'UX / UI':'VISUAL'}</span></div>
+  <div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div>
+ </a>`).join('');
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+<script src="base.js"></script>
+<script>
+const filter=document.getElementById('filter'),fhl=filter.querySelector('.hl');
+const fslide=b=>{fhl.style.width=b.offsetWidth+'px';fhl.style.transform=`translateX(${b.offsetLeft}px)`;};
+addEventListener('load',()=>fslide(filter.querySelector('.on')));addEventListener('resize',()=>fslide(filter.querySelector('.on')));
+document.fonts.ready.then(()=>fslide(filter.querySelector('.on')));
+filter.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+ filter.querySelector('.on').classList.remove('on');b.classList.add('on');fslide(b);
+ const f=b.dataset.f,cards=[...grid.children],first=new Map(cards.map(c=>[c,c.getBoundingClientRect()]));
+ cards.forEach(c=>c.classList.toggle('out',!(f==='all'||c.dataset.c===f)));grid.classList.toggle('filtered',f!=='all');
+ cards.forEach((c,i)=>{if(c.classList.contains('out'))return;const a=first.get(c),z=c.getBoundingClientRect();
+  if(!a.width){c.animate([{opacity:0,transform:'translateY(40px) scale(.96)'},{opacity:1,transform:'none'}],{duration:800,delay:i*40,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});return;}
+  c.animate([{transform:`translate(${a.left-z.left}px,${a.top-z.top}px)`},{transform:'none'}],{duration:900,easing:'cubic-bezier(.22,1,.36,1)'});});
+}));
+grid.querySelectorAll('.card').forEach(c=>{const f=c.querySelector('.frame');
+ c.addEventListener('mousemove',e=>{const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  f.style.setProperty('--ry',((x-.5)*6)+'deg');f.style.setProperty('--rx',((.5-y)*5)+'deg');f.style.setProperty('--gx',x*100+'%');f.style.setProperty('--gy',y*100+'%');});
+ c.addEventListener('mouseleave',()=>{f.style.setProperty('--rx','0deg');f.style.setProperty('--ry','0deg');});});
+const vo=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(!v)return;if(e.isIntersecting){if(v.dataset.src){v.preload='auto';v.muted=true;v.defaultMuted=true;v.playsInline=true;const name=v.dataset.src.split('/').pop().replace('.mp4','');v.src=v.dataset.src;v.removeAttribute('data-src');v.addEventListener('playing',()=>{v.classList.add('on');v.dataset.ok=1;},{once:true});/* if this device refuses to autoplay video, swap in the animated image, which always plays */const fall=()=>{if(v.dataset.ok||v.dataset.fb)return;v.dataset.fb=1;const im=new Image();im.className='poster anim';im.alt='';im.decoding='async';im.src='assets/covers/'+name+'.webp';im.onload=()=>{v.parentNode.insertBefore(im,v.nextSibling);requestAnimationFrame(()=>im.classList.add('on'));v.remove();};};v._fall=fall;const r=e.target.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)tryPlay(v);}}}),{threshold:.01,rootMargin:'700px 0px'});
+function tryPlay(v){v.play().catch(()=>v._fall&&v._fall());if(!v.dataset.ok&&!v._t)v._t=setTimeout(()=>v._fall&&v._fall(),1600);}
+const vp=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(!v||!v.isConnected||v.dataset.src)return;e.isIntersecting?tryPlay(v):v.pause();}),{threshold:.01});
+grid.querySelectorAll('.card').forEach(c=>{vo.observe(c);vp.observe(c);});
+magnet('.soon .btn',.14);
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Galimatías — Brand Identity — Aditya Ghadage</title>
+<meta name="description" content="El Galimatías — Brand Identity, a case study by Aditya Ghadage.">
+<link rel="icon" href="assets/face.svg">
+<link rel="preload" as="image" href="assets/case-galimatias/s00.webp">
+<link rel="stylesheet" href="base.css">
+<style>
+:root{--page:#ffffff;--fg:#171411;--acc:#f2685f;--gut:clamp(60px,5vw,96px)}
+html,body{background:var(--page)}
+.case{position:relative;z-index:1;background:var(--page);padding:0 var(--gut)}
+.doc{position:relative;max-width:2000px;margin:0 auto}
+.doc img{display:block;width:100%;height:auto;opacity:0;transition:opacity .9s var(--ease)}
+.doc img.ok{opacity:1}
+.doc .ov{position:absolute;object-fit:cover;background:transparent;pointer-events:none}
+/* back: a quiet circle in the left margin; the label slides out on hover */
+.back{position:fixed;left:calc((var(--gut) - 46px)/2);top:22px;z-index:55;display:flex;align-items:center;height:46px;min-width:46px;border-radius:999px;overflow:hidden;
+  background:color-mix(in srgb,var(--fg) 10%,var(--page));color:var(--fg);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 18%,transparent);
+  font:600 14px/1 var(--sans);white-space:nowrap;transition:background .35s var(--ease),box-shadow .35s var(--ease),transform .4s var(--spring)}
+.back svg{flex:none;width:46px;height:20px;transition:transform .4s var(--ease)}
+.back span{max-width:0;opacity:0;transition:max-width .5s var(--ease),opacity .3s var(--ease),padding .5s var(--ease)}
+.back:hover,.back:focus-visible{background:var(--fg);color:var(--page)}
+.back:hover span,.back:focus-visible span{max-width:90px;opacity:1;padding-right:18px}
+.back:hover svg{transform:translateX(-2px)}
+.back:active{transform:scale(.95)}
+.back:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:900px){:root{--gut:0px}.back{left:12px;top:12px;background:color-mix(in srgb,var(--page) 80%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}}
+@media (prefers-reduced-motion:reduce){.doc img{transition:none;opacity:1}}
+</style>
+</head>
+<body data-nofooter>
+<canvas id="dots" aria-hidden="true" style="display:none"></canvas>
+<div class="curtain"></div>
+<div class="cur"><span>VIEW</span></div><div class="cur-dot"></div>
+<a class="back" href="work.html" data-go aria-label="Back to all work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg><span>All work</span></a>
+<main class="page case">
+  <h1 class="sr">El Galimatías — Brand Identity</h1>
+  <div class="doc" id="doc"><img src="assets/case-galimatias/s00.webp" width="2334" height="1600" alt="" decoding="async"><img src="assets/case-galimatias/s01.webp" width="2334" height="1600" alt="" decoding="async"><img src="assets/case-galimatias/s02.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s03.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s04.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s05.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s06.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s07.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s08.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s09.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s10.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s11.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s12.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s13.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s14.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s15.webp" width="2334" height="1600" alt="" loading="lazy" decoding="async"><img src="assets/case-galimatias/s16.webp" width="2334" height="1015" alt="" loading="lazy" decoding="async"></div>
+  <div class="sr"><p>Handcrafted ideas</p><p>for the digital culture</p><p>El Galimatias El Galimatías is not just a creative agency - it’s a curious companion for brands navigating the chaos</p><p>of ideas. We believe that brilliance rarely arrives fully formed. It’s born in the mess, the margin notes, the moments that make no sense at first glance. That’s where we come in. We take the scribbles, the what-ifs, the weird ideas that don’t yet have names - and turn them into something that makes people feel.</p><p>We’re not afraid of strange. We welcome it. Because in our world, nonsense isn’t the opposite of clarity - it’s the path to it.</p><p>&quot;You bring the spark. We’ll help it speak.&quot;</p><p>Colour</p><p>This color palette captures the essence of Galimatías bold, curious, and full of character. The playful coral, mint, and lilac spark imagination, while the yellow adds warmth and optimism. Grounded by deep charcoal, it’s a blend of whimsy and clarity just like our creative process.</p><p>#FF6B6B</p><p>#CFFDE1</p><p>#FFD359</p><p>#EFABFF</p><p>#303030</p><p>TYPOGRAPHY</p><p>The typography system of El Galimatías balances clarity and character. Gilroy, our primary font, brings boldness and modern structure - it’s confident, clean, and perfect for big, impactful moments. Satoshi, the secondary font, offers calm contrast with its minimalist design, allowing space for ideas to breathe without distraction.</p><p>Primary Font</p><p>Secondary Font</p><p>Accent Font</p><p>Gilroy</p><p>Satoshi</p><p>URW Bookman</p><p>Modern, bold, and geometric Gilroy brings confident clarity to our chaos.</p><p>Clean and neutral, Satoshi gives our wild ideas space to breathe and speak clearly.</p><p>With expressive curves and editorial charm, Uvw Bookman adds a touch of personality and storytelling depth.</p><p>Turn your ‘huh?’</p><p>into a ‘hell yes’</p><p>Handcrafted ideas for the digital culture</p><p>Marketing</p><p>Web Design</p><p>Branding</p><p>Logo Design</p><p>Handcrafted ideas for the digital culture</p><p>Copywriting</p><p>Take what you need Handcrafted ideas for the digital culture</p><p>EL Galimatías.com</p><p>Thank you</p></div>
+</main>
+<script src="base.js"></script>
+<script>
+(() => {
+const doc = document.getElementById('doc');
+doc.querySelectorAll('img').forEach(im => { const ok = () => im.classList.add('ok'); im.complete && im.naturalWidth ? ok() : im.addEventListener('load', ok); });
+/* motion clips start when they come into view and rest when they leave */
+/* clips start loading well before they scroll into view, and only play while on screen */
+const near = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting && v.dataset.src) { v.preload = 'auto'; v.src = v.dataset.src; v.removeAttribute('data-src'); } }), { rootMargin: '1600px 0px' });
+const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { if (v.dataset.src) { v.src = v.dataset.src; v.removeAttribute('data-src'); } v.play().catch(() => {}); } else v.pause(); }), { threshold: 0 });
+doc.querySelectorAll('.ov').forEach(v => near.observe(v));
+doc.querySelectorAll('.ov').forEach(v => vio.observe(v));
+addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelector('.back').click(); });
+})();
+</script>
+</body>
+</html>
