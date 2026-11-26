@@ -251,9 +251,11 @@ body.wlock{overflow:hidden}
   opacity:0;transform:translateY(12px);transition:opacity 1s var(--ease) .3s,transform 1s var(--ease) .3s}
 .life.in .lede{opacity:1;transform:none}
 .life .booth{position:absolute;left:calc((100% - 1728*var(--u))/2);width:calc(1728*var(--u));top:0;height:calc(1109*var(--u))}
-.life .go{position:absolute;left:0;right:0;top:calc(300*var(--u));display:flex;justify-content:center;z-index:3;opacity:0;transform:translateY(12px);transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
+.life .go{position:absolute;left:0;right:0;top:calc(990*var(--u));display:flex;justify-content:center;z-index:3;opacity:0;transform:translateY(12px);transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
 .life.in .go{opacity:1;transform:none}
 .life .go .btn .ic{display:inline-block;transition:transform .5s var(--ease)}.life .go .btn:hover .ic{transform:translate(2px,-2px)}
+.cam-link{position:absolute;z-index:4;border-radius:8px;transition:background .3s var(--ease)}
+.cam-link:hover{background:rgba(227,162,26,.18)}.cam-link:focus-visible{outline:2px solid var(--mustard);outline-offset:2px}
 .life .bscene{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 1.2s var(--ease) .2s}
 .life.in .bscene{opacity:1}
 
@@ -313,7 +315,7 @@ body.wlock{overflow:hidden}
   .nine .stage{position:relative;left:auto;top:auto;transform:none;width:1050px;height:600px}
   #nineSvg,.nine .nl{position:absolute;inset:auto;left:0;top:10px;width:1050px;height:568px}
   .studio .go .btn,.life .go .btn{height:48px;padding:0 22px;border-radius:8px;font-size:15px}
-  .life .go{position:static;margin-top:22px}
+  .life .go{position:static;margin:-4px 0 0;padding-bottom:56px}
   .life .booth{position:relative;left:auto;top:auto;width:200vw;height:auto;aspect-ratio:1728/1109;margin-top:10px}
   .life{overflow:hidden}
   @media (min-width:600px){#cards{grid-template-columns:1fr 1fr;column-gap:28px;padding:56px 22px 40px}.pcard{--u:calc((100vw - 120px) / 2 / 479)}
@@ -469,8 +471,8 @@ body.wlock{overflow:hidden}
   <section class="life" id="life">
     <h2><span class="w" style="--i:0"><span>Life</span></span> <span class="w" style="--i:1"><span>Outside</span></span> <span class="w" style="--i:2"><span>Figma</span></span></h2>
     <p class="lede">When I’m not designing, I’m travelling, taking photos or writing about what I noticed along the way.</p>
-    <div class="go"><a class="btn btn-primary" href="https://www.instagram.com/_adiiiiityaa" target="_blank" rel="noopener">Follow along on Instagram <span class="ic">↗</span></a></div>
     <div class="booth"><div class="bscene" data-scene="scenes/life.html" aria-hidden="true"></div></div>
+    <div class="go"><a class="btn btn-primary" href="https://www.instagram.com/_adiiiiityaa" target="_blank" rel="noopener">Follow along on Instagram <span class="ic">↗</span></a></div>
   </section>
 
 </main>
@@ -674,6 +676,13 @@ const loadFrames = root => root.querySelectorAll('[data-scene]').forEach(async h
   const sr = host.attachShadow({ mode: 'open' });
   sr.innerHTML = `<style>:host{display:block}${css}svg{width:100%;height:100%;display:block}</style>` + [...doc.body.children].filter(e => e.tagName !== 'SCRIPT').map(e => e.outerHTML).join('');
   const sc = { on: false, q: [], half: /life/.test(url), n: 0 }; SCENES.push(sc);
+  /* the "_adiiiiityaa" signature on the camera opens Instagram */
+  if (/life/.test(url)) { const t = [...sr.querySelectorAll('text')].find(x => /adiiiiityaa/.test(x.textContent));
+    if (t) { const a = document.createElement('a'); a.className = 'cam-link'; a.href = 'https://www.instagram.com/_adiiiiityaa'; a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label', 'Aditya on Instagram'); a.dataset.cursor = 'view'; a.dataset.label = 'VIEW ON INSTAGRAM'; host.parentNode.appendChild(a); bindCursor(a.parentNode);
+      const place = () => { const b = host.parentNode.getBoundingClientRect(), r = t.getBoundingClientRect(), p = 10;
+        Object.assign(a.style, { left: r.left - b.left - p + 'px', top: r.top - b.top - p + 'px', width: r.width + p * 2 + 'px', height: r.height + p * 2 + 'px' }); };
+      place(); addEventListener('resize', place); document.fonts.ready.then(place); setTimeout(place, 800); } }
   new IntersectionObserver(es => es.forEach(e => sc.on = e.isIntersecting), { rootMargin: '80px' }).observe(host);
   const D = new Proxy(document, { get(t, k) {
     if (k === 'getElementById') return id => sr.getElementById(id);
