@@ -1358,10 +1358,10 @@ new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.
 /* ================= In their words: two drifting rows of notes; a note opens into a full card ================= */
 /* TESTIMONIALS: replace these placeholders with the real words, names and roles */
 const WORDS = [
-  { q: 'Testimonial text goes here. Replace this with the real words, exactly as they were written, as long or as short as needed.', n: 'Omkar', r: 'Brand Manager, HCL GUVI', p: 'omkar' },
-  { q: 'Testimonial text goes here. A second voice, about a project you worked on together, what it was like, and what changed because of it. Longer notes are trimmed on the card and read in full when opened.', n: 'Varedh', r: 'Associate Director, Nagarro', p: 'varedh' },
-  { q: 'Testimonial text goes here. Keep the real wording exactly as they said it.', n: 'Swar', r: 'Strategy, Nagarro', p: 'swar' },
-  { q: 'Testimonial text goes here. Another voice about working together, the process, and the result.', n: 'Mahim', r: 'UX Consultant', p: 'mahim' }
+  { q: 'What I liked about working with Aditya is that he actually listens before he opens Figma. I’d come with half an idea and he’d come back with something that made sense of it, and usually a version I hadn’t thought of. Easy to work with, never precious about his work, and quick when the deadline gets tight.', n: 'Omkar', r: 'Brand Manager, HCL GUVI', p: 'omkar' },
+  { q: 'Aditya is one of those people you can put in front of a client early in their career and not worry. He prepares well, asks good questions, and is honest when something isn’t working. He also has a good eye, so his work rarely needs a second round of polish from us.', n: 'Varedh', r: 'Associate Director, Nagarro', p: 'varedh' },
+  { q: 'Honestly, he made my job easier. I’d hand over messy notes and he’d turn them into something the client could see and react to. He pushes back when it matters, and he’s genuinely nice to have on a team.', n: 'Swar', r: 'Strategy, Nagarro', p: 'swar' },
+  { q: 'Aditya cares about the boring details that make a product feel right. Spacing, wording, what happens when something goes wrong. He’s curious, takes feedback without getting defensive, and keeps getting better. I’d happily work with him again.', n: 'Mahim', r: 'UX Consultant', p: 'mahim' }
 ];
 const ws = $('#words'), wr = $('#wrows');
 const ini = n => n.split(/\s+/).map(x => x[0]).slice(0, 2).join('').toUpperCase();
