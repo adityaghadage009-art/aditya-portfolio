@@ -899,6 +899,29 @@ body.lblock{overflow:hidden}
 .pcard .psel i:nth-child(1){left:-5px;top:-5px}.pcard .psel i:nth-child(2){right:-5px;top:-5px}.pcard .psel i:nth-child(3){left:-5px;bottom:-5px}.pcard .psel i:nth-child(4){right:-5px;bottom:-5px}
 .pcard .psel span{position:absolute;left:-1.5px;bottom:calc(100% + 6px);top:auto;transform:none;padding:3px 7px;border-radius:3px;background:#0d99ff;color:#fff;font:600 11px/1.2 var(--sans);white-space:nowrap}
 @media (hover:none){.pcard .psel{display:none}}
+
+/* ===== project hover v3: lift forward, tab slides out, neighbours soften ===== */
+.pcard .psel{display:none!important}
+.pcard{transition:z-index 0s .35s}
+.pcard:hover,.pcard:focus-visible{z-index:20;transition:z-index 0s}
+.pcard .paper{transition:box-shadow .5s var(--ease),transform .5s var(--ease),filter .5s var(--ease),opacity .5s var(--ease)}
+.pcard:hover .paper,.pcard:focus-visible .paper{transform:translateY(calc(-10*var(--u))) scale(1.025);
+  box-shadow:0 calc(2*var(--u)) calc(3*var(--u)) rgba(30,20,10,.12),0 calc(26*var(--u)) calc(40*var(--u)) calc(-14*var(--u)) rgba(30,20,10,.42)}
+#cards:has(.pcard:hover) .pcard:not(:hover) .paper{filter:saturate(.75);opacity:.78}
+.pcard .paper img,.pcard .paper video{transition:transform .8s var(--ease)}
+.pcard:hover .paper img,.pcard:hover .paper video{transform:scale(1.035)}
+.ptab{position:absolute;left:50%;top:calc(100% - 2*var(--u));z-index:-1;transform:translate(-50%,calc(-100% + 2*var(--u)));display:inline-flex;align-items:center;gap:.5em;white-space:nowrap;
+  padding:calc(12*var(--u)) calc(20*var(--u)) calc(10*var(--u));border-radius:0 0 calc(10*var(--u)) calc(10*var(--u));background:#1d1714;color:#fffdf8;
+  font:600 max(11px,calc(14*var(--u)))/1 var(--sans);letter-spacing:.02em;transition:transform .5s cubic-bezier(.2,.8,.2,1.15)}
+.ptab i{font-style:normal;color:var(--mustard);transition:transform .4s var(--ease)}
+.pcard:hover .ptab,.pcard:focus-visible .ptab{transform:translate(-50%,0)}
+.pcard:hover .ptab i{transform:translateX(3px)}
+@media (hover:none){.ptab{display:none}}
+
+.pcard .paper{isolation:isolate}
+.ptab{opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1.15),opacity .25s ease}
+.pcard:hover .ptab,.pcard:focus-visible .ptab{opacity:1}
+.pcard.dim .paper{filter:saturate(.75);opacity:.75}
 </style>
 </head>
 <body>
@@ -1481,9 +1504,9 @@ let on=false,t0=performance.now(),acc=0,lt=t0;
 new IntersectionObserver(es=>es.forEach(e=>{on=e.isIntersecting;lt=performance.now();}),{rootMargin:'200px'}).observe(NS);
 render(0);(function L(n){if(on){acc+=Math.min(50,n-lt);render(acc/1000);}lt=n;requestAnimationFrame(L);})(t0);}
 
-/* selection box: each card carries its own, it simply appears on the card you point at */
-document.querySelectorAll('.pcard .paper').forEach(p => { const c = p.closest('.pcard'), sel = document.createElement('span'); sel.className = 'psel'; sel.setAttribute('aria-hidden', 'true');
-  sel.innerHTML = `<i></i><i></i><i></i><i></i><span>${(c.querySelector('.t')?.textContent || '').trim()}</span>`; p.appendChild(sel); });
+/* hover: the card you point at comes forward with a "view" tab; the rest step back */
+document.querySelectorAll('.pcard .paper').forEach(p => { const t = document.createElement('span'); t.className = 'ptab'; t.setAttribute('aria-hidden', 'true'); t.innerHTML = 'View case study <i>→</i>'; p.appendChild(t);
+  const c = p.closest('.pcard'); c.addEventListener('mouseenter', () => document.querySelectorAll('.pcard').forEach(o => o.classList.toggle('dim', o !== c))); c.addEventListener('mouseleave', () => document.querySelectorAll('.pcard').forEach(o => o.classList.remove('dim'))); });
 </script>
 </body>
 </html>
