@@ -1,347 +1,73 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Many → One → Again</title>
+<html lang="en"><head><meta charset="utf-8"><title>Human judgement, AI speed</title>
 <style>
 html,body{margin:0;height:100%;background:transparent;overflow:hidden}
-
 svg{width:100%;height:100%;display:block}
-text{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:800}
+.sans{font-family:Manrope,system-ui,sans-serif}
+.hand{font-family:Hand,Gelasio,serif}
 </style></head><body>
+<!-- 04 · Human judgement, AI speed: AI deals nine ideas in a blink; a human pen picks the one worth building -->
 <svg id="s" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-<defs>
-  <clipPath id="scr"><rect width="280" height="500" rx="34"/></clipPath>
-  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10"/></filter>
-</defs>
-
-<g id="grid"></g>
-<g id="ring"></g>
-<g id="hero"></g>
-<g id="marker"></g>
-<g id="prompt"></g>
-<g id="fx"></g>
+  <!-- prompt bar -->
+  <g id="bar"><rect x="210" y="120" width="580" height="74" rx="37" fill="#fffdf8" stroke="#1d1714" stroke-width="6"/>
+    <path d="M262 157 l9 -22 l9 22 l22 9 l-22 9 l-9 22 l-9 -22 l-22 -9 Z" fill="#e3a21a" stroke="#1d1714" stroke-width="4" stroke-linejoin="round"/>
+    <rect id="typed" x="318" y="150" width="0" height="14" rx="6" fill="#1d1714"/>
+    <circle cx="746" cy="157" r="22" fill="#1d1714"/><path d="M738 157 h16 m-7 -7 l7 7 l-7 7" stroke="#fffdf8" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="grid"></g>
+  <path id="ring" fill="none" stroke="#e3a21a" stroke-width="9" stroke-linecap="round"/>
+  <g id="pick" opacity="0"><rect x="-84" y="-26" width="168" height="52" rx="26" fill="#e3a21a" stroke="#1d1714" stroke-width="5"/>
+    <text x="0" y="10" text-anchor="middle" class="hand" font-size="32" fill="#1d1714">this one.</text></g>
+  <g id="lab" opacity="0"><text x="500" y="935" text-anchor="middle" class="sans" font-size="22" font-weight="800" letter-spacing="3" fill="#8b8177"><tspan id="labA">AI: 9 IDEAS IN SECONDS</tspan></text></g>
+  <g id="pen"><path d="M0 0 l14 -40 l60 -96 l22 14 l-60 96 Z" fill="#f26b4f" stroke="#1d1714" stroke-width="5" stroke-linejoin="round"/><path d="M0 0 l14 -40 l22 14 Z" fill="#fffdf8" stroke="#1d1714" stroke-width="5" stroke-linejoin="round"/><path d="M0 0 l5 -14 l8 5 Z" fill="#1d1714"/></g>
 </svg>
 <script>
-{
-const LOOP=15;
-const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
-const mk=(tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
-const set=(e,a)=>{for(const k in a)e.setAttribute(k,a[k]);};
-const T=(p,x,y,s,size,fill,anchor='start',w=800)=>{const e=mk('text',{x,y,'font-size':size,fill,'text-anchor':anchor,'font-weight':w},p);e.textContent=s;return e;};
-const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), seg=(t,a,b)=>cl((t-a)/(b-a)), lerp=(a,b,p)=>a+(b-a)*p;
-const io=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, out=x=>1-Math.pow(1-x,3), inn=x=>x*x*x;
-const back=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
-const INK='#1d1714',CREAM='#fff8ec',MUS='#e3a21a',OLI='#6f6b34',COR='#f26b4f',TEAL='#2f8f83',PEACH='#ffeed2',RED='#e5483b',GREY='#8f8a83';
-const SP=(s=1)=>`M0 ${-14*s} L${3.5*s} ${-3.5*s} L${14*s} 0 L${3.5*s} ${3.5*s} L0 ${14*s} L${-3.5*s} ${3.5*s} L${-14*s} 0 L${-3.5*s} ${-3.5*s}Z`;
-const K=120/280; // mini scale
-// ---------------- prompt bar ----------------
-const pr=$('prompt');
-mk('rect',{x:206,y:218,width:600,height:70,rx:35,fill:INK,opacity:.12},pr);
-mk('rect',{x:200,y:210,width:600,height:70,rx:35,fill:'#fff',stroke:INK,'stroke-width':3},pr);
-mk('path',{d:SP(.8),transform:'translate(240 245)',fill:MUS,stroke:INK,'stroke-width':2.2,'stroke-linejoin':'round'},pr);
-const ph=T(pr,268,253,'Describe a screen…',21,'#b5aea3','start',700);
-const typed=T(pr,268,253,'',21,INK,'start',800);
-const caret=mk('rect',{x:268,y:232,width:2.5,height:27,rx:1,fill:INK},pr);
-const gen=mk('g',{},pr);
-const genRing=mk('circle',{cx:0,cy:0,r:26,fill:'none',stroke:MUS,'stroke-width':4,opacity:0},gen);
-mk('circle',{cx:0,cy:0,r:25,fill:INK},gen);
-mk('path',{d:SP(.85),fill:MUS},gen);
-const WORD='onboarding screen';
-// ---------------- screens ----------------
-function screen(p,v){
-  const g=mk('g',{'clip-path':'url(#scr)'},p);
-  mk('rect',{width:280,height:500,fill:v.bg||'#fff'},g);
-  const ink=v.dark?'#fff':INK, soft=v.dark?'#4a5170':'#e7e2da';
-  if(v.kind==='block'){mk('rect',{x:16,y:16,width:248,height:230,rx:24,fill:v.c1},g);
-    if(v.ill==='circle')mk('circle',{cx:140,cy:131,r:56,fill:v.c2},g);
-    if(v.ill==='x'){mk('path',{d:'M40 40 L240 222 M240 40 L40 222',stroke:v.c2,'stroke-width':4},g);}
-    if(v.ill==='wave')mk('path',{d:'M16 180 Q80 140 140 180 T264 170 L264 246 L16 246Z',fill:v.c2},g);
-    if(v.ill==='stars')[[90,90,1.4],[180,120,1],[130,180,1.8]].forEach(([x,y,s])=>mk('path',{d:SP(s),transform:`translate(${x} ${y})`,fill:v.c2},g));
-    if(v.ill==='blob')mk('path',{d:'M90 80 Q150 40 200 90 Q240 150 180 190 Q110 220 80 170 Q50 120 90 80Z',fill:v.c2},g);
-  }
-  if(v.kind==='full'){mk('rect',{width:280,height:300,fill:v.c1},g);mk('circle',{cx:220,cy:70,r:40,fill:v.c2},g);}
-  const ty=v.kind==='full'?330:286;
-  mk('rect',{x:24,y:ty,width:180,height:20,rx:6,fill:v.dark?'#fff':v.tc||'#cfc9c0'},g);
-  mk('rect',{x:24,y:ty+30,width:130,height:20,rx:6,fill:v.dark?'#fff':v.tc||'#cfc9c0'},g);
-  mk('rect',{x:24,y:ty+68,width:210,height:10,rx:5,fill:soft},g);mk('rect',{x:24,y:ty+86,width:160,height:10,rx:5,fill:soft},g);
-  if(v.btn==='outline')mk('rect',{x:24,y:420,width:232,height:50,rx:v.r??25,fill:'none',stroke:v.b,'stroke-width':4},g);
-  else mk('rect',{x:24,y:420,width:232,height:50,rx:v.r??25,fill:v.b},g);
-  return g;
+const $ = id => document.getElementById(id);
+const cl = v => Math.max(0, Math.min(1, v)), io = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = x => 1 - Math.pow(1 - x, 3), back = x => 1 + 2.4 * Math.pow(x - 1, 3) + 1.4 * Math.pow(x - 1, 2);
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const NS = 'http://www.w3.org/2000/svg', T = 10.4, PICK = 4;
+const TINTS = ['#f7e7b4', '#e2e7cc', '#f5d9cb', '#dfe9e4', '#f3e7cf', '#e6e0f0', '#f7e7b4', '#f5d9cb', '#e2e7cc'];
+const mk = (tag, a, p) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); (p || $('grid')).appendChild(e); return e; };
+// nine quick ideas: same skeleton, slightly different each time
+const cards = TINTS.map((c, i) => { const g = mk('g', {}); const col = i % 3, row = (i / 3) | 0;
+  mk('rect', { x: -80, y: -110, width: 160, height: 220, rx: 14, fill: '#fffdf8', stroke: '#1d1714', 'stroke-width': 5 }, g);
+  mk('rect', { x: -64, y: -94, width: 128, height: 88, rx: 8, fill: c, stroke: '#1d1714', 'stroke-width': 3 }, g);
+  mk('rect', { x: -64, y: 10, width: 70 + (i * 17 % 50), height: 12, rx: 5, fill: '#1d1714' }, g);
+  mk('rect', { x: -64, y: 34, width: 120, height: 9, rx: 4, fill: '#cfc4b2' }, g);
+  mk('rect', { x: -64, y: 74, width: 128, height: 22, rx: 8, fill: i === PICK ? '#1d1714' : '#cfc4b2' }, g);
+  const x1 = mk('path', { d: 'M-50 -60 L50 60 M50 -60 L-50 60', stroke: '#f26b4f', 'stroke-width': 9, 'stroke-linecap': 'round', fill: 'none', 'stroke-dasharray': 340, 'stroke-dashoffset': 340 }, g);
+  return { g, x: 300 + col * 200, y: 340 + row * 232, x1 }; });
+function frame(now) {
+  const t = (now / 1000) % T, reset = seg(t, 9.6, 10.3);
+  $('typed').setAttribute('width', (380 * out(seg(t, .2, 1.0)) * (1 - reset)).toFixed(1));
+  // AI: dealt fast, a little careless
+  cards.forEach((c, i) => { const a = 1.1 + i * .09, k = back(seg(t, a, a + .35)), o = seg(t, a, a + .1) * (1 - reset);
+    const chosen = i === PICK, lift = chosen ? io(seg(t, 7.0, 7.9)) : 0, dim = chosen ? 0 : seg(t, 7.0, 7.6);
+    const sc = (.55 + .45 * k) * (1 + .55 * lift), x = c.x + (500 - c.x) * lift, y = c.y + (560 - c.y) * lift;
+    c.g.setAttribute('opacity', (o * (1 - .82 * dim)).toFixed(3));
+    c.g.setAttribute('transform', `translate(${x} ${y}) scale(${sc}) rotate(${(1 - k) * (i % 2 ? 8 : -8)})`);
+    if (chosen) $('grid').appendChild(c.g); });
+  // human: slow, deliberate strikes, then a circle around the one
+  const order = [0, 2, 6, 8, 1, 3, 5, 7];
+  order.forEach((i, j) => { const a = 3.0 + j * .32; cards[i].x1.setAttribute('stroke-dashoffset', (340 * (1 - io(seg(t, a, a + .28)) * (1 - reset))).toFixed(1)); });
+  const rc = out(seg(t, 5.8, 6.6)) * (1 - seg(t, 6.9, 7.2)), c = cards[PICK];
+  const pts = []; for (let k = 0; k <= 48 * rc; k++) { const an = -1.9 + k / 48 * Math.PI * 2.15; pts.push(`${(c.x + Math.cos(an) * 118).toFixed(1)} ${(c.y + Math.sin(an) * 150).toFixed(1)}`); }
+  $('ring').setAttribute('d', pts.length > 1 ? 'M' + pts.join(' L') : '');
+  // the pen follows the work
+  let px = 880, py = 900;
+  if (t > 2.6 && t < 5.8) { const j = Math.min(7, Math.floor((t - 3.0) / .32)), q = cards[order[Math.max(0, j)]], f = seg(t, 3.0 + j * .32, 3.28 + j * .32);
+    px = q.x - 50 + 100 * f; py = q.y - 60 + 120 * f; if (t < 3.0) { const e = io(seg(t, 2.6, 3.0)); px = 880 + (cards[0].x - 50 - 880) * e; py = 900 + (cards[0].y - 60 - 900) * e; } }
+  else if (t >= 5.8 && t < 6.9) { const an = -1.9 + rc * Math.PI * 2.15; px = c.x + Math.cos(an) * 118; py = c.y + Math.sin(an) * 150; }
+  else if (t >= 6.9) { const e = io(seg(t, 6.9, 7.6)); const sx = c.x + Math.cos(-1.9 + Math.PI * 2.15) * 118, sy = c.y + Math.sin(-1.9 + Math.PI * 2.15) * 150; px = sx + (880 - sx) * e; py = sy + (900 - sy) * e; }
+  $('pen').setAttribute('transform', `translate(${px} ${py})`);
+  const pk = back(seg(t, 7.8, 8.2));
+  $('pick').setAttribute('opacity', (seg(t, 7.8, 7.9) * (1 - reset)).toFixed(3));
+  $('pick').setAttribute('transform', `translate(690 390) rotate(-6) scale(${.6 + .4 * pk})`);
+  // caption swaps from the machine's speed to the human's call
+  $('lab').setAttribute('opacity', (seg(t, 1.3, 1.6) * (1 - seg(t, 2.6, 2.9)) + seg(t, 7.9, 8.2) * (1 - reset)).toFixed(3));
+  $('labA').textContent = t < 5 ? 'AI: 9 IDEAS IN SECONDS' : 'ME: THE ONE WORTH BUILDING';
+  requestAnimationFrame(frame);
 }
-const VAR=[
- {kind:'block',c1:'#e4e1dc',ill:'x',c2:'#c9c4bc',b:'#bdb8b0'},
- {kind:'block',c1:'#dbe6f5',ill:'circle',c2:'#a9c1e6',b:'#5b84c4',r:8},
- {kind:'full',c1:'#f1c6d3',c2:'#e48aa8',b:'#d9607f',r:6},
- {kind:'block',c1:'#d7ccef',ill:'stars',c2:'#a28ad8',b:'#7d63c4',btn:'outline'},
- {kind:'block',c1:'#e6efe3',ill:'blob',c2:'#a9cf9b',b:'#6aa45a',r:4},
- {kind:'full',bg:'#1c2238',dark:true,c1:'#2b3354',c2:'#59628c',b:'#59628c'},
- {kind:'block',c1:'#fde7a6',ill:'circle',c2:'#f5c542',b:'#d9a520',tc:'#e0c56b'},
- null, // the keeper
- {kind:'block',c1:'#d4eef0',ill:'wave',c2:'#86cdd4',b:'#3aa6b2',r:12},
- {kind:'block',c1:'#ececec',ill:'circle',c2:'#d4d4d4',b:INK,r:0},
-];
-const W=7;
-const POS=[...Array(10)].map((_,i)=>[220+(i%5)*140, 447+Math.floor(i/5)*234]);
-const minis=VAR.map((v,i)=>{
-  if(i===W) return null;
-  const wrap=mk('g',{},$('grid')), g=mk('g',{},wrap);
-  mk('rect',{x:-6,y:-4,width:292,height:512,rx:40,fill:INK,opacity:.12},g);
-  screen(g,v); mk('rect',{width:280,height:500,rx:34,fill:'none',stroke:INK,'stroke-width':6},g);
-  const marks=mk('g',{fill:'none',stroke:RED,'stroke-width':7,'stroke-linecap':'round'},wrap);
-  const [cx,cy]=POS[i];
-  const a=mk('path',{d:`M${cx-40} ${cy-62} L${cx+40} ${cy+62}`},marks), b=mk('path',{d:`M${cx+40} ${cy-62} L${cx-40} ${cy+62}`},marks);
-  return {wrap,g,a,b,cx,cy};
-});
-// ---------------- the keeper (hero phone) ----------------
-const hero=mk('g',{},$('hero'));
-const bezel=mk('g',{},hero);
-mk('rect',{x:-4,y:10,width:304,height:524,rx:46,fill:INK,opacity:.18,filter:'url(#soft)'},bezel);
-mk('rect',{x:-12,y:-12,width:304,height:524,rx:46,fill:INK},bezel);
-const heroShadow=mk('rect',{x:-6,y:-4,width:292,height:512,rx:40,fill:INK,opacity:.12},hero);
-const scr=mk('g',{'clip-path':'url(#scr)'},hero);
-mk('rect',{width:280,height:500,fill:'#fff'},scr);
-// onboarding: raw AI draft + refined layers
-const onb=mk('g',{},scr);
-const BLUE='#3b82f6', RAW='#cfc9c0';
-// illustration block
-mk('rect',{x:16,y:16,width:248,height:230,rx:24,fill:'#efe5d6'},onb);
-const rawIll=mk('g',{},onb); mk('circle',{cx:140,cy:131,r:50,fill:'#e2d2bc'},rawIll); mk('path',{d:'M110 165 L140 120 L170 165Z',fill:'#c9b79e'},rawIll);
-const ill=mk('g',{},onb);
-const illBg=mk('rect',{x:16,y:16,width:248,height:230,rx:24,fill:PEACH},ill);
-const illClip=mk('clipPath',{id:'illc'},document.querySelector('defs'));mk('rect',{x:16,y:16,width:248,height:230,rx:24},illClip);
-const illIn=mk('g',{'clip-path':'url(#illc)'},ill);
-const sun=mk('circle',{cx:206,cy:72,r:26,fill:MUS},illIn);
-const cloud=mk('path',{d:'M52 70 q8 -14 22 -8 q8 -12 22 -2 q14 0 12 12 h-56Z',fill:'#fff'},illIn);
-const hills=mk('g',{},illIn);
-mk('path',{d:'M16 200 Q90 150 160 190 T264 178 L264 246 L16 246Z',fill:'#9fd4b8'},hills);
-mk('path',{d:'M16 222 Q100 190 180 216 T264 210 L264 246 L16 246Z',fill:TEAL},hills);
-const pot=(p,x,y,s)=>{const g=mk('g',{transform:`translate(${x} ${y}) scale(${s})`},p);
-  mk('path',{d:'M0 0 C-4 -40 -40 -50 -48 -30 C-40 -14 -14 -12 0 0Z',fill:TEAL,stroke:INK,'stroke-width':4},g);
-  mk('path',{d:'M0 0 C6 -50 46 -60 52 -38 C44 -18 16 -14 0 0Z',fill:'#4fb08f',stroke:INK,'stroke-width':4},g);
-  mk('path',{d:'M0 0 C-6 -40 0 -70 10 -86 C20 -66 14 -30 0 0Z',fill:TEAL,stroke:INK,'stroke-width':4},g);
-  mk('path',{d:'M-30 0 h60 l-8 46 h-44Z',fill:COR,stroke:INK,'stroke-width':4.5},g);return g;};
-const potW=mk('g',{},illIn); pot(potW,0,0,0.9);
-// rethink chip
-const chip=mk('g',{},onb);
-mk('rect',{x:28,y:28,width:134,height:30,rx:15,fill:'#fff',stroke:INK,'stroke-width':2.5},chip);
-mk('path',{d:'M0 -11 C6 -5 8 -1 6 4 C5 8 -5 8 -6 4 C-7 0 -3 -3 -2 -7 C0 -4 2 -4 0 -11Z',transform:'translate(46 44)',fill:COR},chip);
-T(chip,58,48,'Build a streak',12,INK,'start',800);
-// copy
-const rawTitle=mk('g',{},onb); mk('rect',{x:24,y:284,width:180,height:20,rx:6,fill:RAW},rawTitle); mk('rect',{x:24,y:314,width:130,height:20,rx:6,fill:RAW},rawTitle);
-const ttl1=T(onb,24,300,'',25,INK), ttl2=T(onb,24,330,'',25,INK);
-const rawSub=mk('g',{},onb); mk('rect',{x:24,y:352,width:210,height:10,rx:5,fill:'#e7e2da'},rawSub); mk('rect',{x:24,y:370,width:160,height:10,rx:5,fill:'#e7e2da'},rawSub);
-const sub=T(onb,24,362,'Build a streak you’ll love.',13,GREY,'start',700);
-const dotsRaw=mk('g',{},onb), dotsNew=mk('g',{},onb);
-[0,1,2].forEach(i=>{mk('rect',{x:24+i*16,y:385,width:i?8:22,height:8,rx:4,fill:'#d9d4cb'},dotsRaw);mk('rect',{x:24+i*16,y:385,width:i?8:22,height:8,rx:4,fill:i?'#e2ddd4':TEAL},dotsNew);});
-// button
-const rawBtn=mk('g',{},onb); mk('rect',{x:24,y:420,width:232,height:50,rx:8,fill:'#bdb8b0'},rawBtn); mk('rect',{x:100,y:440,width:80,height:10,rx:5,fill:'#e7e2da'},rawBtn);
-const obtn=mk('g',{},onb);
-mk('rect',{x:24,y:424,width:232,height:50,rx:25,fill:INK},obtn);
-mk('rect',{x:24,y:420,width:232,height:50,rx:25,fill:TEAL},obtn);
-T(obtn,140,451,'Get started',16,'#fff','middle');
-const tap=mk('circle',{cx:140,cy:445,r:18,fill:INK,opacity:0},onb);
-// home (streak) screen
-const home=mk('g',{},scr);
-T(home,24,62,'Welcome back,',15,GREY,'start',700);T(home,24,92,'Riya',27,INK);
-mk('circle',{cx:240,cy:70,r:20,fill:MUS,stroke:INK,'stroke-width':3},home);mk('circle',{cx:240,cy:66,r:7,fill:INK},home);mk('path',{d:'M228 84 q12 -14 24 0',fill:INK},home);
-mk('rect',{x:16,y:112,width:248,height:150,rx:24,fill:PEACH},home);
-const flame=mk('g',{},home);
-mk('path',{d:'M0 -44 C20 -22 30 -6 24 12 C18 28 -18 28 -24 12 C-28 -4 -12 -16 -8 -30 C-2 -18 6 -16 0 -44Z',fill:COR,stroke:INK,'stroke-width':3.5,'stroke-linejoin':'round'},flame);
-mk('path',{d:'M0 -6 C10 4 12 12 8 18 C4 24 -8 24 -10 16 C-12 8 -4 4 0 -6Z',fill:MUS},flame);
-const numG=mk('g',{},home); const num=T(numG,122,214,'0',64,INK,'start',900);
-T(home,124,240,'day streak',14,OLI,'start',700);
-const plus=T(home,214,160,'+1',20,TEAL,'middle',900);
-const DAYS='MTWTFSS'.split('');
-const dots=DAYS.map((d,i)=>{const x=38+i*34;const g=mk('g',{},home);
-  const c=mk('circle',{cx:x,cy:298,r:13,fill:'#fff',stroke:INK,'stroke-width':2.5},g);
-  const ck=mk('path',{d:`M${x-5} 298 l4 4 l7 -8`,fill:'none',stroke:'#fff','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'},g);
-  T(home,x,330,d,11,GREY,'middle',800);return {g,c,ck,x};});
-mk('rect',{x:16,y:346,width:248,height:136,rx:24,fill:'#e6f3ec'},home);
-mk('ellipse',{cx:140,cy:470,rx:60,ry:6,fill:TEAL,opacity:.18},home);
-const plantG=mk('g',{},home); pot(plantG,0,0,1);
-const night=mk('g',{},scr);
-mk('rect',{width:280,height:500,fill:'#1c2238'},night);
-mk('path',{d:'M150 220 a40 40 0 1 0 30 60 a32 32 0 1 1 -30 -60Z',fill:'#ffe9a8'},night);
-[[70,120,1],[210,150,.7],[90,330,.6],[220,360,.9]].forEach(([x,y,s])=>mk('path',{d:SP(s*.7),transform:`translate(${x} ${y})`,fill:'#ffe9a8'},night));
-const shine=mk('rect',{x:-160,y:-100,width:70,height:700,fill:'#fff',opacity:.55,transform:'rotate(20)'},scr);
-mk('rect',{width:280,height:500,rx:34,fill:'none',stroke:INK,'stroke-width':6},hero);
-const notch=mk('rect',{x:110,y:12,width:60,height:14,rx:7,fill:INK},hero);
-
-// ---- design tools (hero-local coords) ----
-const tools=mk('g',{},hero);
-const panel=mk('g',{},tools);
-mk('rect',{x:-238,y:66,width:204,height:216,rx:18,fill:INK,opacity:.1},panel);
-mk('rect',{x:-244,y:58,width:204,height:216,rx:18,fill:'#fff',stroke:INK,'stroke-width':3},panel);
-T(panel,-222,92,'Refine',16,INK);
-const CHK=['Illustration','Copy','Colour','Rethink'].map((n,i)=>{const y=126+i*38;const g=mk('g',{},panel);
-  const box=mk('rect',{x:-222,y:y-12,width:24,height:24,rx:7,fill:'#fff',stroke:INK,'stroke-width':2.5},g);
-  const ck=mk('path',{d:`M${-216} ${y} l4 4 l8 -9`,fill:'none',stroke:'#fff','stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'},g);
-  const lb=T(g,-188,y+5,n,14,GREY,'start',800);return {box,ck,lb,y};});
-const sticky=mk('g',{},tools);
-mk('rect',{x:306,y:44,width:164,height:110,rx:4,fill:INK,opacity:.12},sticky);
-mk('rect',{x:300,y:36,width:164,height:110,rx:4,fill:'#ffe38a',stroke:INK,'stroke-width':2.5},sticky);
-T(sticky,318,74,'Okay… but why',15,INK);T(sticky,318,96,'would they come',15,INK);T(sticky,318,118,'back?',15,INK);
-const stickyArrow=mk('path',{d:'M300 120 Q250 140 172 70',fill:'none',stroke:INK,'stroke-width':2.5,'stroke-linecap':'round','stroke-dasharray':'5 6'},sticky);
-const pop=mk('g',{},tools);
-mk('rect',{x:-168,y:414,width:150,height:62,rx:16,fill:'#fff',stroke:INK,'stroke-width':3},pop);
-const SW=['#bdb8b0','#5b84c4',COR,TEAL].map((c,i)=>mk('circle',{cx:-138+i*34,cy:445,r:12,fill:c,stroke:INK,'stroke-width':2.5},pop));
-const swRing=mk('circle',{cx:-36,cy:445,r:17,fill:'none',stroke:BLUE,'stroke-width':3},pop);
-const sel=mk('g',{},tools);
-const selR=mk('rect',{fill:'none',stroke:BLUE,'stroke-width':2.5},sel);
-const H=[0,1,2,3].map(()=>mk('rect',{width:9,height:9,fill:'#fff',stroke:BLUE,'stroke-width':2},sel));
-const cursor=mk('g',{},tools);
-cursor.innerHTML=`<path d="M0 0 L0 26 L7 20 L12 31 L17 29 L12 18 L21 18Z" fill="${INK}" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><rect x="16" y="28" width="66" height="22" rx="11" fill="${TEAL}"/><text x="49" y="43" font-size="12" fill="#fff" text-anchor="middle" font-weight="800">Aditya</text>`;
-const clickRing=mk('circle',{r:0,fill:'none',stroke:BLUE,'stroke-width':2.5,opacity:0},tools);
-// ring + marker
-const ring=mk('path',{d:(()=>{let d='';for(let i=0;i<=56;i++){const a=-2.2+i/56*(Math.PI*2+0.5),r=1+0.04*Math.sin(i*0.7);d+=(i?'L':'M')+(500+84*r*Math.cos(a)).toFixed(1)+' '+(681+132*r*Math.sin(a)).toFixed(1)+' ';}return d;})(),fill:'none',stroke:RED,'stroke-width':7,'stroke-linecap':'round'},$('ring'));
-const RL=ring.getTotalLength();set(ring,{'stroke-dasharray':RL+' '+(RL+10)});
-const marker=mk('g',{},$('marker'));
-mk('g',{transform:'rotate(34)'},marker).innerHTML=`<rect x="-11" y="-150" width="22" height="104" rx="8" fill="#fff" stroke="${INK}" stroke-width="3.5"/><rect x="-11" y="-112" width="22" height="30" fill="${RED}"/><rect x="-12" y="-52" width="24" height="16" rx="3" fill="${RED}" stroke="${INK}" stroke-width="3.5"/><path d="M-7 -36 L-4 -4 Q0 0 4 -4 L7 -36Z" fill="${RED}" stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"/>`;
-// fx: sparkles, badge, confetti
-const fx=$('fx');
-const sparks=[[318,300,1,MUS,11.0],[690,360,.75,TEAL,11.1],[312,690,.65,COR,11.2],[688,740,.9,MUS,11.3]].map(([x,y,s,c,t0])=>({g:mk('path',{d:SP(s),fill:c,stroke:INK,'stroke-width':2.4,'stroke-linejoin':'round'},fx),x,y,t0}));
-const conf=[...Array(16)].map((_,i)=>{const a=-Math.PI/2+(i/15-0.5)*2.6,sp=260+((i*37)%5)*40;return {e:mk('rect',{x:-6,y:-3,width:12,height:6,rx:2,fill:[COR,MUS,TEAL][i%3]},fx),vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:(i*53)%360};});
-const tag=mk('g',{},fx);const tagBg=mk('rect',{x:-58,y:-17,width:116,height:34,rx:17,fill:'#fff',stroke:INK,'stroke-width':2.5},tag);const tagA=T(tag,0,6,'AI draft',15,GREY,'middle');const tagF=mk('g',{},tag);mk('rect',{x:-58,y:-17,width:116,height:34,rx:17,fill:TEAL,stroke:INK,'stroke-width':2.5},tagF);T(tagF,0,6,'Final ✓',15,'#fff','middle');
-const badge=mk('g',{},fx);
-mk('rect',{x:-118,y:-26,width:236,height:52,rx:26,fill:INK},badge);
-mk('path',{d:'M0 -14 C7 -7 10 -2 8 4 C6 9 -6 9 -8 4 C-9 -1 -4 -5 -3 -10 C-1 -6 2 -5 0 -14Z',transform:'translate(-82 2) scale(1.2)',fill:COR},badge);
-T(badge,8,8,'7-day streak!',20,CREAM,'middle');
-
-const DAY0=12.85-0.6*6,DSTEP=0.6; const dayT=k=>DAY0+(k-1)*DSTEP; // day k lands at dayT(k)
-window.__E=Object.assign({pr,ph,caret,gen,genRing,ring,marker,hero,bezel,notch,heroShadow,shine,onb,home,ill,rawIll,sun,cloud,hills,potW,rawTitle,sub,rawSub,pop,swRing,obtn,rawBtn,dotsNew,dotsRaw,sticky,chip,panel,tools,cursor,tag,tagF,tagA,tap,numG,flame,plantG,badge},
- ...minis.map((m,i)=>m?{['wrap'+i]:m.wrap,['mini'+i]:m.g,['scr'+i]:m.g.firstChild.nextSibling,['xa'+i]:m.a,['xb'+i]:m.b}:{}),
- ...CHK.map((c,i)=>({['box'+i]:c.box})),...dots.map((o,i)=>({['dg'+i]:o.g})),...sparks.map((o,i)=>({['sp'+i]:o.g})),...conf.map((c,i)=>({['cf'+i]:c.e})));
-function render(T0){
-  const t=((T0%LOOP)+LOOP)%LOOP;
-  // ---- prompt ----
-  const pIn=back(seg(t,14.45,14.85)), pOut=io(seg(t,5.0,5.4));
-  const pY=t>14.3?lerp(-40,0,pIn):lerp(0,-60,pOut), pO=t>14.3?seg(t,14.45,14.65):1-pOut;
-  set(pr,{transform:`translate(0 ${pY})`,opacity:pO});
-  const n=t>13?0:Math.round(WORD.length*seg(t,0.25,1.05)); typed.textContent=WORD.slice(0,n);
-  set(ph,{opacity:n===0&&t<0.3||t>14.3?1:0});
-  const tw=n?typed.getComputedTextLength():0;
-  set(caret,{x:268+tw+2,opacity:(t<1.2||t>14.5)&&((t*2.4)%1<0.6)?1:0});
-  const gp=t>1.1&&t<1.5?(t<1.2?out(seg(t,1.1,1.2)):1-back(seg(t,1.2,1.5))):0;
-  set(gen,{transform:`translate(755 245) scale(${1-0.14*gp}) rotate(${90*io(seg(t,1.15,1.7))})`});
-  const gr=seg(t,1.2,1.75); set(genRing,{r:26+34*out(gr),opacity:gr>0&&gr<1?0.9*(1-gr):0});
-  // ---- cascade ----
-  const order=[0,1,2,3,4,5,6,7,8,9];
-  const fly=(i,t)=>{const t0=1.3+i*0.07; return seg(t,t0,t0+0.5);};
-  const outFly=(i)=>{const d=Math.hypot(POS[i][0]-500,POS[i][1]-560);return seg(t,5.0+d*0.0008,5.35+d*0.0008);};
-  minis.forEach((m,i)=>{if(!m)return;
-    const f=fly(i,t), k=back(f), p=out(f);
-    const x=lerp(755,m.cx,p), y=lerp(245,m.cy,p)-Math.sin(Math.PI*p)*40;
-    set(m.g,{transform:`translate(${x} ${y}) scale(${K*Math.max(0,k)}) translate(-140 -250)`,opacity:f>0&&t<14?1:0});
-    const o=io(outFly(i)), dx=m.cx-500, dy=m.cy-560, L=Math.hypot(dx,dy)||1;
-    set(m.wrap,{transform:`translate(${dx/L*90*o} ${dy/L*90*o}) translate(${m.cx} ${m.cy}) scale(${1-0.25*o}) translate(${-m.cx} ${-m.cy})`,opacity:1-o});
-  });
-  // ---- marker: cross out 9, circle 1 ----
-  const losers=[0,9,3,5,1,8,4,6,2]; const X0=2.6,XS=0.18;
-  let mx=880,my=980,mo=0;
-  const strokes=[]; losers.forEach((i,j)=>{const m=minis[i];const s0=X0+j*XS;strokes.push({p:m.a,t0:s0,t1:s0+0.055,m},{p:m.b,t0:s0+0.075,t1:s0+0.13,m});});
-  strokes.forEach(s=>{const L=s.p.getTotalLength();set(s.p,{'stroke-dasharray':L+' '+(L+10),'stroke-dashoffset':L*(1-io(seg(t,s.t0,s.t1)))});});
-  losers.forEach((i,j)=>{const m=minis[i];const d=seg(t,X0+j*XS+0.13,X0+j*XS+0.3);set(m.g.firstChild.nextSibling,{opacity:1-0.55*d});});
-  const RT0=X0+losers.length*XS+0.1, RT1=RT0+0.45;
-  set(ring,{'stroke-dashoffset':RL*(1-io(seg(t,RT0,RT1))),opacity:1-io(seg(t,5.0,5.2))});
-  // marker position
-  let cur=null;
-  for(let j=0;j<strokes.length;j++){const s=strokes[j];
-    if(t>=s.t0&&t<=s.t1){const q=s.p.getPointAtLength(s.p.getTotalLength()*io(seg(t,s.t0,s.t1)));cur=[q.x,q.y];break;}
-    const nx=strokes[j+1]; const nt0=nx?nx.t0:RT0;
-    if(t>s.t1&&t<nt0){const a=s.p.getPointAtLength(s.p.getTotalLength()),b=nx?nx.p.getPointAtLength(0):ring.getPointAtLength(0),k=io(seg(t,s.t1,nt0));cur=[lerp(a.x,b.x,k),lerp(a.y,b.y,k)-Math.sin(Math.PI*k)*14];break;}}
-  if(t>=RT0&&t<=RT1){const q=ring.getPointAtLength(RL*io(seg(t,RT0,RT1)));cur=[q.x,q.y];}
-  if(t<X0){const b=strokes[0].p.getPointAtLength(0),k=out(seg(t,2.2,X0));cur=[lerp(900,b.x,k),lerp(1060,b.y,k)];}
-  if(t>RT1){const a=ring.getPointAtLength(RL),k=io(seg(t,RT1,RT1+0.35));cur=[lerp(a.x,900,k),lerp(a.y,1080,k)];}
-  set(marker,{transform:`translate(${cur[0]} ${cur[1]})`,opacity:t>2.2&&t<RT1+0.35?1:0});
-  // ---- hero ----
-  const hf=fly(W,t), hk=back(hf), hp=out(hf);
-  const hz=seg(t,5.2,5.95), hzE=io(hz), hzB=back(hz);
-  let hx=lerp(755,500,hp), hy=lerp(245,681,hp)-Math.sin(Math.PI*hp)*40, hs=K*Math.max(0,hk);
-  if(t>5.2){hx=500;hy=lerp(681,530,hzE);hs=lerp(K,1,hzB);}
-  const ho=io(seg(t,14.0,14.5)); if(t>14.0){hy=lerp(530,250,ho);hs=lerp(1,0.15,ho);}
-  set(hero,{transform:`translate(${hx} ${hy}) scale(${hs}) translate(-140 -250)`,opacity:hf>0&&t<14.5?1-seg(t,14.15,14.45):0});
-  const bz=io(seg(t,10.6,11.0)); set(bezel,{opacity:bz}); set(notch,{opacity:bz}); set(heroShadow,{opacity:0.12*(1-bz)});
-  set(shine,{transform:`translate(${lerp(0,560,io(seg(t,10.9,11.45)))} 0) rotate(20)`,opacity:t>10.85&&t<11.5?.55:0});
-
-  // ---- refine & rethink (hero at full size) ----
-  const RF=[ // [selection rect, click time, label idx]
-    {r:[10,10,260,242],c:6.25,done:7.15},
-    {r:[16,270,226,104],c:7.35,done:8.3},
-    {r:[16,410,248,68],c:8.5,done:9.35},
-    {r:[22,22,146,42],c:9.95,done:10.3}];
-  // A illustration
-  const a1=seg(t,6.35,6.7); set(ill,{opacity:t>14.6?0:io(a1)}); set(rawIll,{opacity:t>14.6?1:1-io(a1)});
-  set(sun,{transform:`translate(206 72) scale(${Math.max(0,back(seg(t,6.55,6.9)))}) translate(-206 -72)`});
-  set(cloud,{transform:`translate(${-60*(1-out(seg(t,6.6,7.0)))} 0)`});
-  set(hills,{transform:`translate(0 ${70*(1-out(seg(t,6.45,6.85)))})`});
-  set(potW,{transform:`translate(140 160) scale(${0.9*Math.max(0,back(seg(t,6.75,7.1)))})`});
-  // B copy
-  const W1='Small habits,',W2='big blooms.';
-  const ty=seg(t,7.5,8.2), nch=t>14.6?0:Math.round((W1.length+W2.length)*ty);
-  ttl1.textContent=W1.slice(0,Math.min(nch,W1.length)); ttl2.textContent=W2.slice(0,Math.max(0,nch-W1.length));
-  set(rawTitle,{opacity:t>14.6?1:1-io(seg(t,7.4,7.55))});
-  const sb=t>14.6?0:io(seg(t,8.05,8.3)); set(sub,{opacity:sb}); set(rawSub,{opacity:1-sb});
-  // C colour: pop-over, pick teal, button morphs
-  const pv=t>14.6?0:back(seg(t,8.55,8.8))*(1-io(seg(t,9.25,9.45)));
-  set(pop,{transform:`translate(-90 445) scale(${Math.max(0,pv)}) translate(90 -445)`,opacity:pv>0.01?1:0});
-  set(swRing,{opacity:t>8.95&&t<9.45?1:0});
-  const cc=t>14.6?0:io(seg(t,9.0,9.25)); set(obtn,{opacity:cc}); set(rawBtn,{opacity:1-cc}); set(dotsNew,{opacity:cc}); set(dotsRaw,{opacity:1-cc});
-  // D rethink: sticky note → streak chip
-  const st=t>14.6?0:back(seg(t,9.4,9.7))*(1-io(seg(t,10.45,10.7)));
-  set(sticky,{transform:`translate(382 90) rotate(${4-4*(1-Math.min(1,Math.max(0,st)))}) scale(${Math.max(0,st)}) translate(-382 -90)`,opacity:st>0.01?1:0});
-  const ch=t>14.6?0:Math.max(0,back(seg(t,10.0,10.3))); set(chip,{transform:`translate(95 43) scale(${ch}) translate(-95 -43)`,opacity:ch>0.01?1:0});
-  // checklist panel
-  const pn=t>14.6?0:out(seg(t,5.95,6.3))*(1-io(seg(t,10.5,10.8)));
-  set(panel,{transform:`translate(${-30*(1-pn)} 0)`,opacity:pn});
-  CHK.forEach((c,i)=>{const d=seg(t,RF[i].done,RF[i].done+0.25), on=d>0&&t<14.6;
-    set(c.box,{fill:on?TEAL:'#fff'}); set(c.ck,{opacity:on?1:0}); set(c.lb,{fill:on?INK:GREY});
-    const pk=on?back(d):1; set(c.box,{transform:`translate(-210 ${c.y}) scale(${on?0.7+0.3*pk:1}) translate(210 ${-c.y})`});});
-  // selection box follows the current step
-  let si=-1; for(let i=0;i<4;i++) if(t>=RF[i].c) si=i;
-  const selOn=si>=0&&t<10.45&&t<14.6; let rr=[0,0,0,0];
-  if(si>=0){const cur=RF[si].r, prev=si?RF[si-1].r:cur, k=io(seg(t,RF[si].c,RF[si].c+0.25)); rr=cur.map((v,j)=>lerp(prev[j],v,si?k:1));}
-  const sp0=si===0?back(seg(t,RF[0].c,RF[0].c+0.25)):1;
-  set(sel,{opacity:selOn?1:0,transform:`translate(${rr[0]+rr[2]/2} ${rr[1]+rr[3]/2}) scale(${Math.max(0,sp0)}) translate(${-rr[0]-rr[2]/2} ${-rr[1]-rr[3]/2})`});
-  set(selR,{x:rr[0],y:rr[1],width:rr[2],height:rr[3],rx:8});
-  [[0,0],[1,0],[0,1],[1,1]].forEach(([u,v],j)=>set(H[j],{x:rr[0]+u*rr[2]-4.5,y:rr[1]+v*rr[3]-4.5}));
-  // cursor path
-  const CP=[[5.9,330,560],[6.2,190,150],[7.3,150,318],[8.45,200,446],[8.95,-36,446],[9.9,96,44],[10.5,330,560]];
-  let cx=330,cy=560;
-  for(let i=0;i<CP.length-1;i++){const [t0,x0,y0]=CP[i],[t1,x1,y1]=CP[i+1];const mv=Math.min(0.4,t1-t0);
-    if(t>=t0){const k=io(seg(t,t1-mv,t1));cx=lerp(x0,x1,k);cy=lerp(y0,y1,k)-Math.sin(Math.PI*k)*18;}}
-  const clicks=[6.25,7.35,8.5,9.0,9.95]; let cp=0,ck=-9; clicks.forEach(c=>{if(t>=c-0.08&&t<c+0.5){ck=c;}});
-  const dc=t-ck; cp=dc>-0.08&&dc<0.15?(dc<0?out(seg(dc,-0.08,0)):1-out(seg(dc,0,0.15))):0;
-  set(cursor,{transform:`translate(${cx} ${cy}) scale(${1-0.12*cp})`,opacity:t>5.9&&t<10.55?1:0});
-  const cr=seg(dc,0,0.45); set(clickRing,{cx:cx,cy:cy,r:4+22*out(cr),opacity:dc>0&&cr<1?0.8*(1-cr):0});
-  set(tools,{opacity:t>5.85&&t<10.9?1:0});
-  // tag above phone: AI draft → Final
-  const tgIn=back(seg(t,5.8,6.1)), tgOut=io(seg(t,12.0,12.25)), fin=io(seg(t,10.7,10.95));
-  set(tag,{transform:`translate(500 252) scale(${Math.max(0,tgIn)})`,opacity:t>5.8&&t<12.25?1-tgOut:0});
-  set(tagF,{opacity:fin,transform:`translate(0 ${6*(1-fin)})`}); set(tagA,{opacity:1-fin});
-  // tap get started → slide to home
-  const tp=seg(t,11.65,12.05); set(tap,{r:14+26*out(tp),opacity:tp>0&&tp<1?0.25*(1-tp):0});
-  const bpress=t>11.6&&t<12.0?(t<11.7?out(seg(t,11.6,11.7)):1-back(seg(t,11.7,12.0))):0; set(obtn,{transform:`translate(0 ${3*bpress})`});
-  const sl=io(seg(t,11.9,12.3)); set(onb,{transform:`translate(${-280*sl} 0)`}); set(home,{transform:`translate(${280*(1-sl)} 0)`});
-  // final reveal: one sweep, straight to the 7-day result
-  const R0=12.45, live=t>=R0&&t<14.6;
-  const nk=back(seg(t,R0+0.35,R0+0.75)); num.textContent=t>=R0+0.35&&live?'7':'0';
-  set(numG,{transform:`translate(150 190) scale(${live&&t>=R0+0.35?0.6+0.4*Math.max(0,nk):1}) translate(-150 -190)`});
-  set(flame,{transform:`translate(72 196) scale(${1+(live?0.25*Math.sin(Math.PI*seg(t,R0+0.35,R0+0.85)):0)})`});
-  set(plus,{opacity:0});
-  dots.forEach((o,i)=>{const d=seg(t,R0+i*0.06,R0+i*0.06+0.3),on=live&&d>0;const pk=back(d);
-    set(o.c,{fill:on?TEAL:'#fff'});set(o.ck,{opacity:on?1:0});set(o.g,{transform:`translate(${o.x} 298) scale(${on?0.6+0.4*pk:1}) translate(${-o.x} -298)`});});
-  const grow=live?7*Math.max(0,back(seg(t,R0+0.2,R0+0.9))):0;
-  set(plantG,{transform:`translate(140 452) scale(${0.35+0.65*grow/7})`});
-  set(night,{opacity:0});
-  window.__X={tw,w1:ttl1.textContent?ttl1.getComputedTextLength():0,w2:ttl2.textContent?ttl2.getComputedTextLength():0,chk:CHK.map(c=>+c.ck.getAttribute('opacity')),dot:dots.map(o=>+o.ck.getAttribute('opacity')),show7:num.textContent==='7'?1:0,si,selOn:selOn?1:0,sp0,cx,cy};
-  // ---- fx ----
-  sparks.forEach(o=>{const a=seg(t,o.t0,o.t0+0.35),f=seg(t,o.t0+0.8,o.t0+1.15);const k=back(a)*(1-io(f));
-    set(o.g,{transform:`translate(${o.x} ${o.y}) rotate(${(t-o.t0)*80}) scale(${Math.max(0,k)})`,opacity:a>0&&f<0.6?1-seg(f,0,0.6):0});});
-  const ct=t-dayT(7)-0.05; conf.forEach(c=>{const v=ct>0&&ct<0.9;
-    set(c.e,{transform:`translate(${500+c.vx*ct} ${290+c.vy*ct+520*ct*ct}) rotate(${c.r+ct*500})`,opacity:0});});
-  const bi=back(seg(t,dayT(7)+0.1,dayT(7)+0.55)), bo=io(seg(t,13.9,14.1));
-  set(badge,{transform:`translate(500 ${222-20*bo}) scale(${Math.max(0,bi)})`,opacity:t>dayT(7)&&t<14.1?1-bo:0});
-}
-window.__render=render; window.__ready=true;
-if(!location.search.includes('capture')){const t0=performance.now();(function loop(n){render((n-t0)/1000);requestAnimationFrame(loop);})(t0);}
-}
-</script></body></html>
+requestAnimationFrame(frame);
+</script>
+</body></html>
