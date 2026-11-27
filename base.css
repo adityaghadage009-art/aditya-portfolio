@@ -5,6 +5,7 @@
 @font-face{font-family:Gelasio;src:url(fonts/gelasio.ttf) format("truetype");font-weight:400 700;font-display:swap}
 @font-face{font-family:Gelasio;src:url(fonts/gelasio-italic.ttf) format("truetype");font-style:italic;font-weight:400 700;font-display:swap}
 @font-face{font-family:Manrope;src:url(fonts/manrope.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:Figtree;src:url(fonts/figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
 @font-face{font-family:Mono;src:url(fonts/mono-bold.ttf) format("truetype");font-weight:700;font-display:swap}
 @font-face{font-family:Deva;src:url(fonts/tiro-deva.woff2) format("woff2");font-display:swap}
 
@@ -13,7 +14,7 @@
   --olive:#6f6b34;--mustard:#e3a21a;--coral:#f26b4f;--teal:#2f8f83;
   --dark:#171411;--dark-2:#2a2521;--text:#141210;--text-2:#3b3530;
   /* two families only: Cirka for display, Manrope for everything else */
-  --serif:Fraunces,Gelasio,Georgia,serif;--sans:Manrope,system-ui,sans-serif;--mono:Manrope,system-ui,sans-serif;
+  --serif:Fraunces,Gelasio,Georgia,serif;--sans:Figtree,Manrope,system-ui,sans-serif;--mono:Figtree,Manrope,system-ui,sans-serif;
   --ease:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.34,1.56,.64,1);
   /* 1 design pixel (Figma frame is 1728 wide) */
   --u:calc(min(100vw,2200px) / 1728);
